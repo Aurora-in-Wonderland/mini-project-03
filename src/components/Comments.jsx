@@ -6,6 +6,7 @@ const StComments = styled.div`
     /* width: 600px; */
     border: 1px solid black;
     padding: 20px;
+    margin: 40px;
     input {
         width: 500px;
         height: 30px;
@@ -32,7 +33,7 @@ const StButton = styled.button`
     width: 80px;
     height: 40px;
     margin: 10px;
-    background-color: #114e60;
+    background-color: #41613c;
     border: none;
     border-radius: 8px;
     color: #fff;
