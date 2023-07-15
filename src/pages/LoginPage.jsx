@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const StForm = styled.form`
@@ -30,11 +31,15 @@ const StForm = styled.form`
     button {
         width: 300px;
         height: 50px;
-        background-color: #114e60;
+        background-color: #41613c;
         border: none;
         color: #fff;
         font-size: 30px;
         border-radius: 8px;
+    }
+    p {
+        margin: 10px;
+        color: #41613c;
     }
 `;
 
@@ -73,6 +78,9 @@ export default function LoginPage() {
                     />
                 </div>
                 <button>LOG IN</button>
+                <Link to="/signup">
+                    <p>회원가입하러가기</p>
+                </Link>
             </StForm>
         </>
     );
