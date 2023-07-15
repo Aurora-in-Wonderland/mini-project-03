@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import LoginPage from "../pages/LoginPage";
 import SignupPage from "../pages/SignupPage";
 import ResultPage from "../pages/ResultPage";
+import RandomPage from "../pages/RandomPage";
 
 const Router = () => {
     return (
@@ -26,6 +27,10 @@ const Router = () => {
                     <Route
                         path="/food/result"
                         element={<ResultPage />}
+                    ></Route>
+                    <Route
+                        path="/random"
+                        element={<RandomPage />}
                     ></Route>
                 </Routes>
             </main>
