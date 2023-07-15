@@ -1,12 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
+// import LoginPage from "./pages/LoginPage";
+// import SigninPage from "./pages/SigninPage";
+import Router from "./shared/router";
 
 function App() {
-  return (
-    <div>
-      
-    </div>
-  );
+    return (
+        <>
+            <Router />
+            {/* <SigninPage /> */}
+            {/* <LoginPage /> */}
+        </>
+    );
 }
 
 export default App;

@@ -101,7 +101,7 @@ export default function ResultPage() {
                     </section>
                 </StSection>
                 <StButton>메뉴 선택하고 댓글쓰러 가기</StButton>
-                <Comments />
+                {/* <Comments /> */}
             </StContainer>
         </>
     );
