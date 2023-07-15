@@ -1,0 +1,15 @@
+import { createSlice } from '@reduxjs/toolkit';
+
+const initialState = {
+  choices : {}
+};
+
+const choiceSlice = createSlice({
+  name: 'choice',
+  initialState,
+  reducers: {},
+  },
+});
+
+export const {} = choiceSlice.actions;
+export default choiceSlice.reducer;
