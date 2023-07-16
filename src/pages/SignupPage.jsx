@@ -44,14 +44,54 @@ const StForm = styled.form`
 
 export default function SignupPage() {
     const [form, setForm] = useState({ username: "", loginId: "", password: "", confirm_password: "" });
+    const [isCorrect, setIsCorrect] = useState({
+        usernameCorrect: true,
+        loginIdCorrect: true,
+        passwordCorrect: true,
+        confirm_passwordCorrect: true,
+    });
+
     const handleSigninSubmit = (event) => {
         event.preventDefault();
         console.log(form);
+        const idRegExp = /^[a-zA-z0-9]{4,12}$/;
+        const passwordRegExp = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
+        if (form.username.trim().length === 0) {
+            alert("이름을 입력하세요");
+            setIsCorrect((prev) => {
+                return { ...prev, usernameCorrect: false };
+            });
+            return;
+        }
+        if (form.loginId.trim().length === 0 || !idRegExp.test(form.loginId.trim())) {
+            alert("ID는 영어 대소문자, 4-12글자여야 합니다.");
+            setIsCorrect((prev) => {
+                return { ...prev, loginIdCorrect: false };
+            });
+            return;
+        }
+        if (form.password.trim().length === 0 || !passwordRegExp.test(form.password.trim())) {
+            alert("비밀번호는 영어와 숫자가 포함된 8글자 이상입니다.");
+            setIsCorrect((prev) => {
+                return { ...prev, passwordCorrect: false };
+            });
+            return;
+        }
+        if (form.password !== form.confirm_password) {
+            alert("비밀번호가 일치하지 않습니다.");
+            setIsCorrect((prev) => {
+                return { ...prev, confirm_passwordCorrect: false };
+            });
+            return;
+        }
+        setForm({ username: "", loginId: "", password: "", confirm_password: "" });
     };
+    
     const handleChange = (event) => {
         const { name, value } = event.target;
         setForm({ ...form, [name]: value });
     };
+
     return (
         <>
             <StForm onSubmit={handleSigninSubmit}>
