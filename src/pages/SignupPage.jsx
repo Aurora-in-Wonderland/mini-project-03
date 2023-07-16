@@ -54,8 +54,10 @@ export default function SignupPage() {
     const handleSigninSubmit = (event) => {
         event.preventDefault();
         console.log(form);
-        const idRegExp = /^[a-zA-z0-9]{4,12}$/;
-        const passwordRegExp = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
+        setForm({ username: "", loginId: "", password: "", confirm_password: "" });
+        const idRegExp = /^[a-z0-9]{4,12}$/;
+        const passwordRegExp = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z\d]{8,25}$/;
+
         if (form.username.trim().length === 0) {
             alert("이름을 입력하세요");
             setIsCorrect((prev) => {
@@ -63,20 +65,23 @@ export default function SignupPage() {
             });
             return;
         }
+
         if (form.loginId.trim().length === 0 || !idRegExp.test(form.loginId.trim())) {
-            alert("ID는 영어 대소문자, 4-12글자여야 합니다.");
+            alert("ID는 영어 소문자와 숫자로 이루어진 4-12글자여야 합니다.");
             setIsCorrect((prev) => {
-                return { ...prev, loginIdCorrect: false };
+                return { ...prev, addressCorrect: false };
             });
             return;
         }
+
         if (form.password.trim().length === 0 || !passwordRegExp.test(form.password.trim())) {
-            alert("비밀번호는 영어와 숫자가 포함된 8글자 이상입니다.");
+            alert("비밀번호는 영어와 숫자가 포함된 8글자 이상이어야 합니다.");
             setIsCorrect((prev) => {
                 return { ...prev, passwordCorrect: false };
             });
             return;
         }
+
         if (form.password !== form.confirm_password) {
             alert("비밀번호가 일치하지 않습니다.");
             setIsCorrect((prev) => {
@@ -84,9 +89,8 @@ export default function SignupPage() {
             });
             return;
         }
-        setForm({ username: "", loginId: "", password: "", confirm_password: "" });
     };
-    
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         setForm({ ...form, [name]: value });
