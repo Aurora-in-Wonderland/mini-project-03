@@ -44,10 +44,34 @@ const StForm = styled.form`
 `;
 
 export default function LoginPage() {
-    const [form, setForm] = useState({ loginId: "", password: "" });
+    const [form, setForm] = useState({ address: "", password: "" });
+    const [isCorrect, setIsCorrect] = useState({
+        addressCorrect: true,
+        passwordCorrect: true,
+    });
+
     const handleLoginSubmit = (event) => {
         event.preventDefault();
         console.log(form);
+        
+        const idRegExp = /^[a-z0-9]{4,12}$/;
+        const passwordRegExp = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z\d]{8,25}$/;
+
+        if (form.address.trim().length === 0 || !idRegExp.test(form.address.trim())) {
+            alert("ID는 영어 대소문자, 4-12글자여야 합니다.");
+            setIsCorrect((prev) => {
+                return { ...prev, addressCorrect: false };
+            });
+            return;
+        }
+        if (form.password.trim().length === 0 || !passwordRegExp.test(form.password.trim())) {
+            alert("비밀번호는 영어와 숫자가 포함된 8글자 이상입니다.");
+            setIsCorrect((prev) => {
+                return { ...prev, passwordCorrect: false };
+            });
+            return;
+        }
+        setForm({ loginId: "", password: "" });
     };
     const handleChange = (event) => {
         const { name, value } = event.target;
