@@ -1,28 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import * as S from "./components/style";
-import { useEffect } from "react";
-import axios from "axios";
+
 
 function Home() {
     const navigate = useNavigate();
-    const getData = async () => {
-        const accessToken = localStorage.getItem("accessToken");
-        try {
-            const response = await axios.get("http://1.244.223.183/api/user/getusername", {
-                headers: {
-                    accessToken: accessToken,
-                },
-            });
-            console.log("response", response);
-            localStorage.setItem("username", response.data.username);
-        } catch (error) {
-            console.error("Error:", error);
-        }
-    };
-
-    useEffect(() => {
-        getData();
-    }, []);
 
     return (
         <S.StContainer>
@@ -58,3 +39,6 @@ function Home() {
 }
 
 export default Home;
+
+
+// Bearer%20eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLquYDrlaHrlaEiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY4OTU1NzEwMiwiaWF0IjoxNjg5NTUzNTAyfQ.d71Mmca1_yJS9M67J88THQHd5fJLhmHP8TppNwi1DHQ

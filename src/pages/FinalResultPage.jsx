@@ -3,6 +3,7 @@ import Comments from "../components/Comments";
 
 import styled from "styled-components";
 import { AiFillHeart, AiOutlineHeart, AiFillStar, AiOutlineStar } from "react-icons/ai";
+import { useParams } from "react-router-dom";
 
 const StContainer = styled.div`
     width: 900px;
@@ -38,9 +39,12 @@ const StContainer = styled.div`
     }
 `;
 
+
 export default function FinalResultPage() {
-    const username = localStorage.get("username");
-    console.log(username);
+    // const username = localStorage.get("username");
+    // console.log(username);
+    const params = useParams()
+
     return (
         <div>
             <StContainer>
