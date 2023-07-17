@@ -17,12 +17,12 @@ function Question() {
         },
         {
           id : 1,
-          answer : "진짜 못 먹음",
+          answer : "매운 거 못 먹음",
           value : 1,
         },
         {
           id : 2,
-          answer : "조금은 매워도 괜찮음",
+          answer : "약간 매콤한 정도",
           value : 2,
         },
         {
@@ -32,12 +32,12 @@ function Question() {
         },
         {
           id : 4,
-          answer : "불닭볶음면도 가능함",
+          answer : "불닭 정도는 가능",
           value : 4,
         },
         {
           id : 5,
-          answer : "맵기는 날 방해할 수 없음",
+          answer : "내가 못 먹는 매움은 없음!",
           value : 5,
         }
       ]
