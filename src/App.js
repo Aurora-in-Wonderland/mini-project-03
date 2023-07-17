@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 
 import Home from "./pages/Home";
 import Question from "./pages/Question";
+import Questions from "./pages/Questions"
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import ResultPage from "./pages/ResultPage";
@@ -26,6 +27,10 @@ function App() {
                     <Route
                         path="/question"
                         element={<Question />}
+                    />
+                    <Route
+                        path="/question/:id"
+                        element={<Questions />}
                     />
                     <Route
                         path="/login"

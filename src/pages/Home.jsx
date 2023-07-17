@@ -7,7 +7,6 @@ function Home() {
 
     return (
         <S.StContainer>
-            <S.StNav>네비게이션 바</S.StNav>
             <S.StMain>
                 Home
                 <img src="https://blog.kakaocdn.net/dn/cd2MQ5/btqx0q65v5Y/mKwQKWKh0HNtslQkgsktE0/img.jpg" />
@@ -25,7 +24,7 @@ function Home() {
                         color={S.color.yellow}
                         background={S.color.white}
                         onClick={() => {
-                            navigate("/random-result");
+                            navigate("/random");
                         }}
                     >
                         랜덤 메뉴 뽑기
@@ -33,7 +32,6 @@ function Home() {
                 </S.StBtnGroup>
                 <S.StRankContainer></S.StRankContainer>
             </S.StMain>
-            <S.StFooter></S.StFooter>
         </S.StContainer>
     );
 }
