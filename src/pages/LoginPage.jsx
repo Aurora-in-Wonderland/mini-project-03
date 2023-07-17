@@ -80,6 +80,7 @@ export default function LoginPage() {
             localStorage.setItem("accessToken", response.headers.accesstoken);
             navigate("/");
         } catch (error) {
+            alert("ID나 비밀번호가 틀렸습니다.");
             console.error("에러:", error);
         }
         setForm({ address: "", password: "" });

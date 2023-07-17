@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { BsFillTrashFill, BsFillPenFill } from "react-icons/bs";
 import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
 
 const StComments = styled.div`
     /* width: 600px; */
@@ -41,11 +40,11 @@ const StButton = styled.button`
     color: #fff;
 `;
 
-export default function Comments({username}) {
-    const accessToken = localStorage.getItem("accessToken");
-
+export default function Comments() {
     const [contents, setContents] = useState([]);
     const [text, setText] = useState("");
+
+    const accessToken = localStorage.getItem("accessToken");
 
     const getPost = async () => {
         try {
@@ -63,6 +62,7 @@ export default function Comments({username}) {
 
     const handleAddSubmit = async (event) => {
         event.preventDefault();
+        if (text.trim().length === 0) return alert(" 입력하세요");
         try {
             const response = await axios.post(
                 "http://1.244.223.183/api/food/4/comment",
@@ -76,10 +76,31 @@ export default function Comments({username}) {
                 }
             );
             setText("");
-            setContents([...contents, { content: text }]);
+            setContents([...contents, { content: text, commentId: "" }]);
             getPost();
             console.log("성공", response);
         } catch (error) {
+            console.log("에러", error);
+        }
+    };
+
+    const handleDeleted = async (commentId) => {
+        try {
+            const response = await axios.delete(`http://1.244.223.183/api/food/4/comment/${commentId}`, {
+                headers: {
+                    accesstoken: accessToken,
+                },
+            });
+            setContents(
+                contents.filter((item) => {
+                    return item.commentId !== commentId;
+                })
+            );
+            console.log("성공", response);
+        } catch (error) {
+            if (error.response.data.statusCode === 401) {
+                alert("자기 자신의 댓글만 삭제할 수 있습니다.");
+            }
             console.log("에러", error);
         }
     };
@@ -105,7 +126,7 @@ export default function Comments({username}) {
                     <StButton>입력</StButton>
                 </form>
                 {contents.map((item) => (
-                    <section key={item.id || uuidv4()}>
+                    <section key={item.commentId}>
                         <p>{item.username}</p>
                         <p>{item.content}</p>
                         <div>
@@ -113,7 +134,7 @@ export default function Comments({username}) {
                                 <BsFillPenFill />
                             </button>
                             <button>
-                                <BsFillTrashFill />
+                                <BsFillTrashFill onClick={() => handleDeleted(item.commentId)} />
                             </button>
                         </div>
                     </section>
