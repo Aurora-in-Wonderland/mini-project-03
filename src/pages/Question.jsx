@@ -1,4 +1,4 @@
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as S from "./components/style";
 import { styled } from "styled-components";
 
@@ -11,8 +11,12 @@ function Question() {
           <div>
             <div>지금 땡기는 음식은?</div>
             <ButtonGroup>
-              <S.StButton onClick={()=> navigate("0")}>단</S.StButton>
-              <S.StButton onClick={()=> navigate("0")}>짠</S.StButton>
+              <S.StButton onClick={()=> {
+                localStorage.setItem('salty',false);
+                navigate("0")}}>단</S.StButton>
+              <S.StButton onClick={()=> {
+                localStorage.setItem('salty',true);
+                navigate("0")}}>짠</S.StButton>
             </ButtonGroup>
             <div>1 / 5</div>
           </div>

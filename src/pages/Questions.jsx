@@ -121,7 +121,9 @@ function Question() {
             <ButtonGroup>
               {
                 thisQuestion.option.map((item)=>{
-                  return <S.StButton key={item.id} onClick={()=>{navigate(`../question/${pageNum+1}`)}}>{item.answer}</S.StButton>
+                  return <S.StButton key={item.id} onClick={()=>{
+                    localStorage.setItem(thisQuestion.id, item.value);
+                    navigate(`../question/${pageNum+1}`)}}>{item.answer}</S.StButton>
                 })
               }
             </ButtonGroup>
@@ -132,7 +134,9 @@ function Question() {
             <ButtonGroup>
               {
                 thisQuestion.option.map((item)=>{
-                  return <S.StButton key={item.id} onClick={()=>{navigate("/food/result")}}>{item.answer}</S.StButton> // 결과 페이지로 이동
+                  return <S.StButton key={item.id} onClick={()=>{
+                    localStorage.setItem(thisQuestion.id, item.value);
+                    navigate("/food/result")}}>{item.answer}</S.StButton> // 결과 페이지로 이동
                 })
               }
             </ButtonGroup>
