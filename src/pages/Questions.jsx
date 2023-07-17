@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react"; 
 import * as S from "./components/style";
 import { styled } from "styled-components";
-
-
+import axios from "axios";
 
 function Question() {
   const questions =[
@@ -90,7 +90,7 @@ function Question() {
       ]
     },
     {
-      id : "when",
+      id : "night",
       script : "점심? 저녁?",
       option : [
         {
@@ -111,6 +111,31 @@ function Question() {
   const pageNum = Number(param.id);
   const thisQuestion = questions[pageNum];
   const navigate = useNavigate();
+  // const choiceData = {
+  //       salty : JSON.parse(localStorage.getItem("salty")),
+  //       spicy : Number(localStorage.getItem("spicy")),
+  //       world : Number(localStorage.getItem("world")),
+  //       hot : JSON.parse(localStorage.getItem("hot")),
+  //       night : JSON.parse(localStorage.getItem("night")),
+  //     }
+  // const accessToken = localStorage.getItem("accessToken");
+  // const handleChoiceSubmit = async () => {
+  //   try {
+  //   const response = await axios.post(
+  //   "http://1.244.223.183/api/food/result",
+  //     choiceData,
+  //     {
+  //       headers: {
+  //       Authorization: "Bearer%20eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0ZkxKdVV4cVJoRWVHYjhTR1BTVzBGazQ0MTN0Wk94L1hweW5pelNNUXQ4Z0diNVZYc3o5TTBLYmUzNElzYm54IiwiZXhwIjoxNjg5NzA0MjU4LCJpYXQiOjE2ODk2MTc4NTh9.ksBqKhSYRlslEhiQETdKTD5X2d4buNMnAq7Mlj8hvC8",
+
+  //     },
+  //   });
+  //   console.log("성공", response);
+  //   } catch (error) {
+  //   console.log("에러", error);
+  //   }
+  //   };
+
 
   return (
     <S.StContainer>
@@ -136,7 +161,8 @@ function Question() {
                 thisQuestion.option.map((item)=>{
                   return <S.StButton key={item.id} onClick={()=>{
                     localStorage.setItem(thisQuestion.id, item.value);
-                    navigate("/food/result")}}>{item.answer}</S.StButton> // 결과 페이지로 이동
+                    // handleChoiceSubmit();
+                    navigate("/food/result")}}>{item.answer}</S.StButton>
                 })
               }
             </ButtonGroup>
