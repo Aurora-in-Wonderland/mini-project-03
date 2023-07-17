@@ -70,10 +70,10 @@ const StLogin = styled.div`
 `;
 
 export default function Navbar() {
-    const accessToken = localStorage.getItem("accesstoken");
+    const accessToken = localStorage.getItem("accessToken");
     const navigate = useNavigate();
     const onClickLogoutButton = () => {
-        localStorage.removeItem("accesstoken");
+        localStorage.removeItem("accessToken");
         navigate("/");
     };
     return (

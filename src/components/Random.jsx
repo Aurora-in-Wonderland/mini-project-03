@@ -4,7 +4,7 @@ import Comments from "./Comments";
 
 const StContainer = styled.div`
     width: 900px;
-    height: 75vh;
+    height: 100vh;
     margin: auto;
     background-color: #e4dccf;
 
@@ -64,39 +64,38 @@ const StButton = styled.button`
     cursor: pointer;
 `;
 
-export default function Random() {
+export default function Random({ status }) {
     return (
         <>
             <StContainer>
                 <h1>100% 랜덤! 오늘의 랜덤 메뉴</h1>
                 <h2>마음에 드시는 메뉴를 선택해주세요!</h2>
                 <img
-                    src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
+                    src={status[0].imageUrl}
                     alt="추천메뉴"
                 />
-                <h1>요리이름</h1>
-                <p>설명</p>
+                <h1>{status[0].name}</h1>
                 <StSection>
                     <section>
                         <img
-                            src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Zm9vZHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
+                            src={status[1].imageUrl}
                             alt="추천메뉴"
                         />
-                        <p>요리이름</p>
+                        <p>{status[1].name}</p>
                     </section>
                     <section>
                         <img
-                            src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Zm9vZHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
+                            src={status[2].imageUrl}
                             alt="추천메뉴"
                         />
-                        <p>요리이름</p>
+                        <p>{status[2].name}</p>
                     </section>
                     <section>
                         <img
-                            src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDB8fGZvb2R8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60"
+                            src={status[3].imageUrl}
                             alt="추천메뉴"
                         />
-                        <p>요리이름</p>
+                        <p>{status[3].name}</p>
                     </section>
                 </StSection>
                 <StButton>메뉴 선택하고 댓글쓰러 가기</StButton>
