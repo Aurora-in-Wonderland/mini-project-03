@@ -1,4 +1,4 @@
-import React ,{useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 // import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
@@ -67,68 +67,66 @@ const StButton = styled.button`
 `;
 
 export default function ResultPage() {
+    const [data, setData] = useState([
+        {
+            id: 0,
+            name: "",
+            imageUrl: "",
+        },
+    ]);
+    const accessToken = localStorage.getItem("accessToken");
     const choiceData = {
-        salty : JSON.parse(localStorage.getItem("salty")),
-        spicy : Number(localStorage.getItem("spicy")),
-        world : Number(localStorage.getItem("world")),
-        hot : JSON.parse(localStorage.getItem("hot")),
-        night : JSON.parse(localStorage.getItem("night")),
-      };
+        salty: JSON.parse(localStorage.getItem("salty")),
+        spicy: Number(localStorage.getItem("spicy")),
+        world: Number(localStorage.getItem("world")),
+        hot: JSON.parse(localStorage.getItem("hot")),
+        night: JSON.parse(localStorage.getItem("night")),
+    };
+
     useEffect(() => {
         const instances = async () => {
             try {
-            const response = await axios.post(
-            "http://1.244.223.183/api/food/result",
-              choiceData,
-              {
-                headers: {
-                Authorization: "Bearer%20eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0ZkxKdVV4cVJoRWVHYjhTR1BTVzBGazQ0MTN0Wk94L1hweW5pelNNUXQ4Z0diNVZYc3o5TTBLYmUzNElzYm54IiwiZXhwIjoxNjg5NzA0MjU4LCJpYXQiOjE2ODk2MTc4NTh9.ksBqKhSYRlslEhiQETdKTD5X2d4buNMnAq7Mlj8hvC8",
-              },
-            });
-            console.log("성공", response);
+                const response = await axios.post("http://1.244.223.183/api/food/result", choiceData, {
+                    headers: {
+                        accesstoken: accessToken,
+                    },
+                });
+                setData(response.data);
+                console.log("성공", response);
             } catch (error) {
-            console.log("에러", error);
+                console.log("에러", error);
             }
-            };
-            instances();
-      }, [])
+        };
+        instances();
+    }, []);
+
+    // console.log(data[0].name);
+
     return (
         <>
             <StContainer>
                 <h1>요기어때가 엄선한 오늘의 추천 메뉴</h1>
                 <h2>마음에 드시는 메뉴를 선택해주세요!</h2>
                 <img
-                    src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
+                    src={data[0].imageUrl}
                     alt="추천메뉴"
                 />
                 {/* <p>
                     <AiFillHeart />
                     <AiOutlineHeart />
-                </p> */}
-                <h1>요리이름</h1>
+                </p>  */}
+                <h1>{data[0].name}</h1>
                 <p>설명</p>
                 <StSection>
-                    <section>
-                        <img
-                            src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Zm9vZHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
-                            alt="추천메뉴"
-                        />
-                        <p>요리이름</p>
-                    </section>
-                    <section>
-                        <img
-                            src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Zm9vZHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
-                            alt="추천메뉴"
-                        />
-                        <p>요리이름</p>
-                    </section>
-                    <section>
-                        <img
-                            src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDB8fGZvb2R8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60"
-                            alt="추천메뉴"
-                        />
-                        <p>요리이름</p>
-                    </section>
+                    {data.slice(1, 4).map((item) => (
+                        <section key={item.id}>
+                            <img
+                                src={item.imageUrl}
+                                alt="추천메뉴"
+                            />
+                            <p>{item.name}</p>
+                        </section>
+                    ))}
                 </StSection>
                 <StButton>메뉴 선택하고 댓글쓰러 가기</StButton>
             </StContainer>

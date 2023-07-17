@@ -76,27 +76,15 @@ export default function Random({ status }) {
                 />
                 <h1>{status[0].name}</h1>
                 <StSection>
-                    <section>
-                        <img
-                            src={status[1].imageUrl}
-                            alt="추천메뉴"
-                        />
-                        <p>{status[1].name}</p>
-                    </section>
-                    <section>
-                        <img
-                            src={status[2].imageUrl}
-                            alt="추천메뉴"
-                        />
-                        <p>{status[2].name}</p>
-                    </section>
-                    <section>
-                        <img
-                            src={status[3].imageUrl}
-                            alt="추천메뉴"
-                        />
-                        <p>{status[3].name}</p>
-                    </section>
+                    {status.slice(1, 4).map((item) => (
+                        <section key={item.id}>
+                            <img
+                                src={item.imageUrl}
+                                alt="추천메뉴"
+                            />
+                            <p>{item.name}</p>
+                        </section>
+                    ))}
                 </StSection>
                 <StButton>메뉴 선택하고 댓글쓰러 가기</StButton>
                 {/* <Comments /> */}
