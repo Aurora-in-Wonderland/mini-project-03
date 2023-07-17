@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import clickImage from "../image/clickImage.png";
+import Loading from "../components/Loading";
 
 import Random from "../components/Random";
 import axios from "axios";
@@ -47,8 +48,11 @@ const StContainer = styled.div`
 export default function RandomPage() {
     const [showResult, setShowResult] = useState(false);
     const [data, setData] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleClick = async () => {
+        setIsLoading(true);
+
         try {
             const response = await axios.get(`http://1.244.223.183/api/food/result/random`);
             setShowResult(true);
@@ -56,11 +60,15 @@ export default function RandomPage() {
             console.log("성공:", response);
         } catch (error) {
             console.error("에러:", error);
+        } finally {
+            setTimeout(() => {
+                setIsLoading(false);
+            }, 2000);
         }
     };
-    console.log("data", data);
     return (
         <>
+            {isLoading && <Loading />}
             {!showResult ? (
                 <StContainer>
                     <h1>100% 랜덤! 오늘의 랜덤 메뉴</h1>
@@ -72,9 +80,9 @@ export default function RandomPage() {
                     />
                 </StContainer>
             ) : (
-                <Random
-                    status={data}
-                />
+                <>
+                    <Random status={data} />
+                </>
             )}
         </>
     );
