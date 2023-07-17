@@ -10,18 +10,12 @@ export const color = {
 }
 
 export const StContainer = styled.div`
-  background: ${color.white};
   display: flex;
   flex-direction: column;
   height: 100vh;
   margin: 0 auto;
   max-width: 1200px;
   overflow: hidden;
-`
-export const StNav = styled.header`
-  position: pixed;
-  height: 50px;
-  background: ${color.brown};
 `
 export const StFooter = styled.footer`
   position: fixed;

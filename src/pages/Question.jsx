@@ -102,7 +102,6 @@ function Question() {
 
   return (
     <S.StContainer>
-      <S.StNav />
       <S.StMain>
         <QuestionImage>뭔가 이미지 하나 들어가고</QuestionImage>
         <div>여기 질문 뭐 예를들면 성별?</div>
