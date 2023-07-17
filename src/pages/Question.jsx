@@ -14,6 +14,7 @@ function Question() {
               <S.StButton onClick={()=> navigate("0")}>단</S.StButton>
               <S.StButton onClick={()=> navigate("0")}>짠</S.StButton>
             </ButtonGroup>
+            <div>1 / 5</div>
           </div>
       </S.StMain>
     </S.StContainer>

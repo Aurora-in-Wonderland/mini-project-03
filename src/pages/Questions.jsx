@@ -96,12 +96,12 @@ function Question() {
         {
           id : 0,
           answer : "점심",
-          value : true,
+          value : false,
         },
         {
           id : 1,
           answer : "저녁",
-          value : false,
+          value : true,
         }
       ]
     }
@@ -121,7 +121,7 @@ function Question() {
             <ButtonGroup>
               {
                 thisQuestion.option.map((item)=>{
-                  return <S.StButton onClick={()=>{navigate(`../question/${pageNum+1}`)}}>{item.answer}</S.StButton>
+                  return <S.StButton key={item.id} onClick={()=>{navigate(`../question/${pageNum+1}`)}}>{item.answer}</S.StButton>
                 })
               }
             </ButtonGroup>
@@ -132,11 +132,12 @@ function Question() {
             <ButtonGroup>
               {
                 thisQuestion.option.map((item)=>{
-                  return <S.StButton onClick={()=>{navigate(``)}}>{item.answer}</S.StButton> // 결과 페이지로 이동
+                  return <S.StButton key={item.id} onClick={()=>{navigate("/food/result")}}>{item.answer}</S.StButton> // 결과 페이지로 이동
                 })
               }
             </ButtonGroup>
           </div>}
+          <div>{pageNum+2} / 5</div>
       </S.StMain>
     </S.StContainer>
   )
