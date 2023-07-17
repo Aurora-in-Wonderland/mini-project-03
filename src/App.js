@@ -44,7 +44,7 @@ function App() {
                         element={<RandomPage />}
                     />
                     <Route
-                        path="/result/final"
+                        path="/food/:foodId/comment"
                         element={<FinalResultPage />}
                     />
                 </Routes>

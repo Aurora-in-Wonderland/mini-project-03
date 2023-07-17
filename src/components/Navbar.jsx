@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-// import { BsFillPersonFill } from "react-icons/bs";
+import { BsFillPersonFill } from "react-icons/bs";
 import logo from "../image/logo.png";
 
 const Nav = styled.div`
@@ -18,53 +18,62 @@ const Nav = styled.div`
         width: 100px;
         height: 100px;
     }
-    div {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        margin: 10px;
-        button:first-child {
-            width: 100px;
-            height: 50px;
-            color: #fff;
-            background-color: #41613c;
-            font-size: 15px;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            /* &:hover {
-                background-color: #fff;
-                color: #41613c;
-            } */
-        }
-        button:nth-child(2) {
-            width: 100px;
-            height: 50px;
-            color: #41613c;
-            font-size: 15px;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
+`;
 
-        /* button:nth-child(2):hover {
-            background-color: #41613c;
-            color: #fff;
-        } */
-        .human {
-            width: 50px;
-            height: 50px;
-            color: #fff;
-            margin: 10px;
-            cursor: pointer;
+const StUnLogin = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px;
+    button {
+        width: 100px;
+        height: 50px;
+        color: #fff;
+        background-color: #41613c;
+        font-size: 15px;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        &:hover {
+            color: #41613c;
+            background-color: #fff;
         }
     }
 `;
 
+const StLogin = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px;
+    button {
+        width: 100px;
+        height: 50px;
+        color: #fff;
+        background-color: #41613c;
+        font-size: 15px;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+    .human {
+        width: 50px;
+        height: 50px;
+        color: #fff;
+        margin: 10px;
+        cursor: pointer;
+    }
+`;
+
 export default function Navbar() {
+    const accessToken = localStorage.getItem("accesstoken");
     const navigate = useNavigate();
+    const onClickLogoutButton = () => {
+        localStorage.removeItem("accesstoken");
+        navigate("/");
+    };
     return (
         <>
             <Nav>
@@ -74,23 +83,30 @@ export default function Navbar() {
                         alt="요기어때 로고"
                     />
                 </Link>
-                <div>
-                    <button
-                        onClick={() => {
-                            navigate("/login");
-                        }}
-                    >
-                        LOG IN
-                    </button>
-                    <button
-                        onClick={() => {
-                            navigate("/signup");
-                        }}
-                    >
-                        SIGN UP
-                    </button>
-                    {/* <BsFillPersonFill className="human" /> */}
-                </div>
+
+                {!accessToken ? (
+                    <StUnLogin>
+                        <button
+                            onClick={() => {
+                                navigate("/login");
+                            }}
+                        >
+                            LOG IN
+                        </button>
+                        <button
+                            onClick={() => {
+                                navigate("/signup");
+                            }}
+                        >
+                            SIGN UP
+                        </button>
+                    </StUnLogin>
+                ) : (
+                    <StLogin>
+                        <button onClick={onClickLogoutButton}>LOG OUT</button>
+                        <BsFillPersonFill className="human" />
+                    </StLogin>
+                )}
             </Nav>
         </>
     );

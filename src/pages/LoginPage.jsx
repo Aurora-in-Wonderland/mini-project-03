@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
 
 const StForm = styled.form`
     height: 75vh;
@@ -50,10 +51,12 @@ export default function LoginPage() {
         passwordCorrect: true,
     });
 
-    const handleLoginSubmit = (event) => {
+    const navigate = useNavigate();
+
+    const handleLoginSubmit = async (event) => {
         event.preventDefault();
         console.log(form);
-        
+
         const idRegExp = /^[a-z0-9]{4,12}$/;
         const passwordRegExp = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z\d]{8,25}$/;
 
@@ -71,7 +74,15 @@ export default function LoginPage() {
             });
             return;
         }
-        setForm({ loginId: "", password: "" });
+        try {
+            const response = await axios.post("http://1.244.223.183/api/user/login", form);
+            console.log("성공:", response);
+            localStorage.setItem("accessToken", response.headers.accesstoken);
+            navigate("/");
+        } catch (error) {
+            console.error("에러:", error);
+        }
+        setForm({ address: "", password: "" });
     };
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -85,9 +96,9 @@ export default function LoginPage() {
                     <label htmlFor="name">ID</label>
                     <input
                         type="text"
-                        id="loginId"
-                        name="loginId"
-                        value={form.loginId}
+                        id="address"
+                        name="address"
+                        value={form.address}
                         onChange={handleChange}
                     />
                 </div>

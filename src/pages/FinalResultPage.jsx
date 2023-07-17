@@ -39,6 +39,8 @@ const StContainer = styled.div`
 `;
 
 export default function FinalResultPage() {
+    const username = localStorage.get("username");
+    console.log(username);
     return (
         <div>
             <StContainer>
