@@ -1,5 +1,6 @@
-import React from "react";
+import React ,{useEffect} from "react";
 import styled from "styled-components";
+import axios from "axios";
 // import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 const StContainer = styled.div`
@@ -66,6 +67,31 @@ const StButton = styled.button`
 `;
 
 export default function ResultPage() {
+    const choiceData = {
+        salty : JSON.parse(localStorage.getItem("salty")),
+        spicy : Number(localStorage.getItem("spicy")),
+        world : Number(localStorage.getItem("world")),
+        hot : JSON.parse(localStorage.getItem("hot")),
+        night : JSON.parse(localStorage.getItem("night")),
+      };
+    useEffect(() => {
+        const instances = async () => {
+            try {
+            const response = await axios.post(
+            "http://1.244.223.183/api/food/result",
+              choiceData,
+              {
+                headers: {
+                Authorization: "Bearer%20eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0ZkxKdVV4cVJoRWVHYjhTR1BTVzBGazQ0MTN0Wk94L1hweW5pelNNUXQ4Z0diNVZYc3o5TTBLYmUzNElzYm54IiwiZXhwIjoxNjg5NzA0MjU4LCJpYXQiOjE2ODk2MTc4NTh9.ksBqKhSYRlslEhiQETdKTD5X2d4buNMnAq7Mlj8hvC8",
+              },
+            });
+            console.log("성공", response);
+            } catch (error) {
+            console.log("에러", error);
+            }
+            };
+            instances();
+      }, [])
     return (
         <>
             <StContainer>

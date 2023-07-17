@@ -5,6 +5,8 @@ import { BsFillPersonFill } from "react-icons/bs";
 import logo from "../image/logo.png";
 
 const Nav = styled.div`
+    position: fixed;
+    width: 90vw;
     height: 100px;
     background-color: #41613c;
     display: flex;
@@ -12,7 +14,7 @@ const Nav = styled.div`
     justify-content: space-between;
     align-items: center;
 
-    padding: 0 8rem;
+    padding: 0 5vw;
 
     img {
         width: 100px;
