@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 // import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
-import Comments from "../components/Comments";
-
 const StContainer = styled.div`
     width: 900px;
     margin: auto;
@@ -107,7 +105,6 @@ export default function ResultPage() {
                     </section>
                 </StSection>
                 <StButton>메뉴 선택하고 댓글쓰러 가기</StButton>
-                {/* <Comments /> */}
             </StContainer>
         </>
     );

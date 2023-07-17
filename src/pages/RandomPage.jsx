@@ -6,6 +6,7 @@ import Random from "../components/Random";
 
 const StContainer = styled.div`
     width: 900px;
+    height: 75vh;
     margin: auto;
     background-color: #e4dccf;
     padding: 50px;

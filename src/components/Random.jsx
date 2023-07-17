@@ -4,13 +4,12 @@ import Comments from "./Comments";
 
 const StContainer = styled.div`
     width: 900px;
+    height: 75vh;
     margin: auto;
     background-color: #e4dccf;
-    padding: 50px;
 
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
     align-items: center;
 
     h1 {
