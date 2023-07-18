@@ -77,4 +77,3 @@ const StRankImage = styled.img`
     object-fit: contain;
 `;
 
-// Bearer%20eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLquYDrlaHrlaEiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY4OTU1NzEwMiwiaWF0IjoxNjg5NTUzNTAyfQ.d71Mmca1_yJS9M67J88THQHd5fJLhmHP8TppNwi1DHQ

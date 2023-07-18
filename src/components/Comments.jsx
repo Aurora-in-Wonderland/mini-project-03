@@ -44,16 +44,11 @@ export default function Comments() {
     const [contents, setContents] = useState([]);
     const [text, setText] = useState("");
 
-    const accessToken = localStorage.getItem("accessToken");
     const foodId = localStorage.getItem("foodId");
 
     const getPost = async () => {
         try {
-            const { data } = await api.get(`/api/food/${foodId}/comment`, {
-                headers: {
-                    accesstoken: accessToken,
-                },
-            });
+            const { data } = await api.get(`/api/food/${foodId}/comment`);
             setContents(data);
             console.log("성공", data);
         } catch (error) {
@@ -65,17 +60,9 @@ export default function Comments() {
         event.preventDefault();
         if (text.trim().length === 0) return alert(" 입력하세요");
         try {
-            const response = await api.post(
-                `/api/food/${foodId}/comment`,
-                {
-                    content: text,
-                },
-                {
-                    headers: {
-                        accesstoken: accessToken,
-                    },
-                }
-            );
+            const response = await api.post(`/api/food/${foodId}/comment`, {
+                content: text,
+            });
             setText("");
             setContents([...contents, { content: text, commentId: "" }]);
             getPost();
@@ -87,11 +74,7 @@ export default function Comments() {
 
     const handleDeleted = async (commentId) => {
         try {
-            const response = await api.delete(`/api/food/${foodId}/comment/${commentId}`, {
-                headers: {
-                    accesstoken: accessToken,
-                },
-            });
+            const response = await api.delete(`/api/food/${foodId}/comment/${commentId}`);
             setContents(
                 contents.filter((item) => {
                     return item.commentId !== commentId;

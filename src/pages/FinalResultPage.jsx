@@ -40,16 +40,11 @@ export default function FinalResultPage() {
     const foodId = localStorage.getItem("foodId");
     const foodName = localStorage.getItem("foodName");
     const imageUrl = localStorage.getItem("imageUrl");
-    const accessToken = localStorage.getItem("accessToken");
     const username = localStorage.getItem("username");
 
     const likeButton = async (event) => {
         try {
-            const response = await api.post(`/api/food/${foodId}/like`, null, {
-                headers: {
-                    accesstoken: accessToken,
-                },
-            });
+            const response = await api.post(`/api/food/${foodId}/like`, null);
             setLike(response.data);
             console.log("성공", response);
         } catch (error) {
@@ -62,7 +57,7 @@ export default function FinalResultPage() {
     return (
         <div>
             <StContainer>
-                <h1>{username}님의 선택!</h1>
+                {!username ? <h1>오늘의 메뉴 선택!</h1> : <h1>{username}님의 선택!</h1>}
                 <img
                     src={imageUrl}
                     alt="추천메뉴"
