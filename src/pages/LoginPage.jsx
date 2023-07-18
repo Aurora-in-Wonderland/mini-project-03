@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import api from "../axios/api"
+import api from "../axios/api";
 
 const StForm = styled.form`
     height: 75vh;
@@ -77,7 +77,6 @@ export default function LoginPage() {
         try {
             const response = await api.post("/api/user/login", form);
             console.log("성공:", response);
-            localStorage.setItem("accessToken", response.headers.accesstoken);
             navigate("/");
         } catch (error) {
             alert("ID나 비밀번호가 틀렸습니다.");

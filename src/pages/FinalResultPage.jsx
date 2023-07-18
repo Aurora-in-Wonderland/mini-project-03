@@ -41,6 +41,7 @@ export default function FinalResultPage() {
     const foodName = localStorage.getItem("foodName");
     const imageUrl = localStorage.getItem("imageUrl");
     const accessToken = localStorage.getItem("accessToken");
+    const username = localStorage.getItem("username");
 
     const likeButton = async (event) => {
         try {
@@ -61,7 +62,7 @@ export default function FinalResultPage() {
     return (
         <div>
             <StContainer>
-                <h1>OOO님의 선택!</h1>
+                <h1>{username}님의 선택!</h1>
                 <img
                     src={imageUrl}
                     alt="추천메뉴"
