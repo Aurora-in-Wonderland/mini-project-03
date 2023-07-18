@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { useNavigate } from "react-router";
 // import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 const StContainer = styled.div`
@@ -67,13 +68,12 @@ const StButton = styled.button`
 `;
 
 export default function ResultPage() {
-    const [data, setData] = useState([
-        {
-            id: 0,
-            name: "",
-            imageUrl: "",
-        },
-    ]);
+    const [isData, isSetData] = useState(null);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [clickData, setClickData] = useState(null);
+
+    const navigate = useNavigate();
+
     const accessToken = localStorage.getItem("accessToken");
     const choiceData = {
         salty: JSON.parse(localStorage.getItem("salty")),
@@ -83,24 +83,64 @@ export default function ResultPage() {
         night: JSON.parse(localStorage.getItem("night")),
     };
 
+    const handleImageClick = (imageData) => {
+        setSelectedImage(imageData);
+        let selectedStatus = null;
+
+        if (imageData === "Image 1 Data") {
+            selectedStatus = isData[0];
+        } else if (imageData === "Image 2 Data") {
+            selectedStatus = isData[1];
+        } else if (imageData === "Image 3 Data") {
+            selectedStatus = isData[2];
+        } else if (imageData === "Image 4 Data") {
+            selectedStatus = isData[3];
+        }
+        setClickData(selectedStatus);
+    };
+
+    const instances = async () => {
+        try {
+            const response = await axios.post("http://1.244.223.183/api/food/result", choiceData, {
+                headers: {
+                    accesstoken: accessToken,
+                },
+            });
+            isSetData(response.data);
+            localStorage.removeItem("salty");
+            localStorage.removeItem("spicy");
+            localStorage.removeItem("world");
+            localStorage.removeItem("hot");
+            localStorage.removeItem("night");
+            
+            console.log("성공", response);
+        } catch (error) {
+            console.log("에러", error);
+        }
+    };
+
     useEffect(() => {
-        const instances = async () => {
-            try {
-                const response = await axios.post("http://1.244.223.183/api/food/result", choiceData, {
-                    headers: {
-                        accesstoken: accessToken,
-                    },
-                });
-                setData(response.data);
-                console.log("성공", response);
-            } catch (error) {
-                console.log("에러", error);
-            }
-        };
         instances();
     }, []);
 
-    // console.log(data[0].name);
+    if (isData == null) {
+        return null;
+    }
+
+    const onClickFinalMenu = async (event) => {
+        const foodId = clickData.id;
+        try {
+            const response = await axios.patch(`http://1.244.223.183/api/food/${foodId}/choice`);
+            console.log("성공:", response);
+            localStorage.setItem("foodId", clickData.id);
+            localStorage.setItem("foodName", clickData.name);
+            localStorage.setItem("imageUrl", clickData.imageUrl);
+
+            navigate(`/food/${foodId}/comment`);
+        } catch (error) {
+            console.error("에러:", error);
+        }
+    };
 
     return (
         <>
@@ -108,27 +148,51 @@ export default function ResultPage() {
                 <h1>요기어때가 엄선한 오늘의 추천 메뉴</h1>
                 <h2>마음에 드시는 메뉴를 선택해주세요!</h2>
                 <img
-                    src={data[0].imageUrl}
+                    src={isData && isData[0].imageUrl}
                     alt="추천메뉴"
+                    onClick={() => handleImageClick("Image 1 Data")}
+                    style={{
+                        border: selectedImage === "Image 1 Data" ? "5px solid #FFE27C" : "none",
+                    }}
                 />
-                {/* <p>
-                    <AiFillHeart />
-                    <AiOutlineHeart />
-                </p>  */}
-                <h1>{data[0].name}</h1>
+                <h1>{isData && isData[0].name}</h1>
                 <p>설명</p>
                 <StSection>
-                    {data.slice(1, 4).map((item) => (
-                        <section key={item.id}>
-                            <img
-                                src={item.imageUrl}
-                                alt="추천메뉴"
-                            />
-                            <p>{item.name}</p>
-                        </section>
-                    ))}
+                    <section key={isData && isData[1].id}>
+                        <img
+                            src={isData && isData[1].imageUrl}
+                            alt="추천메뉴"
+                            onClick={() => handleImageClick("Image 2 Data")}
+                            style={{
+                                border: selectedImage === "Image 2 Data" ? "5px solid #FFE27C" : "none",
+                            }}
+                        />
+                        <p>{isData && isData[1].name}</p>
+                    </section>
+                    <section key={isData && isData[2].id}>
+                        <img
+                            src={isData && isData[2].imageUrl}
+                            alt="추천메뉴"
+                            onClick={() => handleImageClick("Image 3 Data")}
+                            style={{
+                                border: selectedImage === "Image 3 Data" ? "5px solid #FFE27C" : "none",
+                            }}
+                        />
+                        <p>{isData && isData[2].name}</p>
+                    </section>
+                    <section key={isData && isData[3].id}>
+                        <img
+                            src={isData && isData[3].imageUrl}
+                            alt="추천메뉴"
+                            onClick={() => handleImageClick("Image 4 Data")}
+                            style={{
+                                border: selectedImage === "Image 4 Data" ? "5px solid #FFE27C" : "none",
+                            }}
+                        />
+                        <p>{isData && isData[3].name}</p>
+                    </section>
                 </StSection>
-                <StButton>메뉴 선택하고 댓글쓰러 가기</StButton>
+                <StButton onClick={onClickFinalMenu}>메뉴 선택하고 댓글쓰러 가기</StButton>
             </StContainer>
         </>
     );

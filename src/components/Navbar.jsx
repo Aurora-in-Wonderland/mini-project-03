@@ -6,7 +6,7 @@ import logo from "../image/logo.png";
 
 const Nav = styled.div`
     position: fixed;
-    width: 90vw;
+    width: 100vw;
     height: 100px;
     background-color: #41613c;
     display: flex;
@@ -26,7 +26,7 @@ const StUnLogin = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 10px;
+    margin: 10%;
     button {
         width: 100px;
         height: 50px;
@@ -48,7 +48,7 @@ const StLogin = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 10px;
+    margin: 10%;
     button {
         width: 100px;
         height: 50px;
