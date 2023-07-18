@@ -2,10 +2,11 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { styled } from "styled-components";
 
 import Home from "./pages/Home";
 import Question from "./pages/Question";
-import Questions from "./pages/Questions"
+import Questions from "./pages/Questions";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import ResultPage from "./pages/ResultPage";
@@ -18,7 +19,7 @@ function App() {
             <header>
                 <Navbar />
             </header>
-            <main>
+            <StMain>
                 <Routes>
                     <Route
                         path="/"
@@ -53,7 +54,7 @@ function App() {
                         element={<FinalResultPage />}
                     />
                 </Routes>
-            </main>
+            </StMain>
             <footer>
                 <Footer />
             </footer>
@@ -62,3 +63,10 @@ function App() {
 }
 
 export default App;
+
+const StMain = styled.div`
+    width: 100%;
+    margin: auto;
+    background-color: #f0ebe3;
+    padding-top: 13vh;
+`;

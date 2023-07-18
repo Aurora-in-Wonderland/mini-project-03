@@ -7,7 +7,7 @@ import logo from "../image/logo.png";
 const Nav = styled.div`
     position: fixed;
     width: 100vw;
-    height: 100px;
+    height: 13vh;
     background-color: #41613c;
     display: flex;
     flex-direction: row;

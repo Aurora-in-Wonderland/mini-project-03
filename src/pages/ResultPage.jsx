@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import { useNavigate } from "react-router";
 // import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import Loading from "../components/Loading";
+import api from "../axios/api"
 
 const StContainer = styled.div`
     width: 900px;
@@ -71,6 +72,7 @@ export default function ResultPage() {
     const [isData, isSetData] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
     const [clickData, setClickData] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
@@ -101,7 +103,7 @@ export default function ResultPage() {
 
     const instances = async () => {
         try {
-            const response = await axios.post("http://1.244.223.183/api/food/result", choiceData, {
+            const response = await api.post("http://1.244.223.183/api/food/result", choiceData, {
                 headers: {
                     accesstoken: accessToken,
                 },
@@ -112,7 +114,7 @@ export default function ResultPage() {
             localStorage.removeItem("world");
             localStorage.removeItem("hot");
             localStorage.removeItem("night");
-            
+
             console.log("성공", response);
         } catch (error) {
             console.log("에러", error);
@@ -129,8 +131,10 @@ export default function ResultPage() {
 
     const onClickFinalMenu = async (event) => {
         const foodId = clickData.id;
+        setLoading(true);
+
         try {
-            const response = await axios.patch(`http://1.244.223.183/api/food/${foodId}/choice`);
+            const response = await api.patch(`/api/food/${foodId}/choice`);
             console.log("성공:", response);
             localStorage.setItem("foodId", clickData.id);
             localStorage.setItem("foodName", clickData.name);
@@ -139,11 +143,16 @@ export default function ResultPage() {
             navigate(`/food/${foodId}/comment`);
         } catch (error) {
             console.error("에러:", error);
+        } finally {
+            setTimeout(() => {
+                setLoading(false);
+            }, 2000);
         }
     };
 
     return (
         <>
+            {loading && <Loading />}
             <StContainer>
                 <h1>요기어때가 엄선한 오늘의 추천 메뉴</h1>
                 <h2>마음에 드시는 메뉴를 선택해주세요!</h2>

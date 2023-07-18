@@ -15,6 +15,7 @@ const StContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 60px;
 
     h1 {
         font-size: 30px;

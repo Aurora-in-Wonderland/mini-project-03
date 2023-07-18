@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { BsFillTrashFill, BsFillPenFill } from "react-icons/bs";
-import axios from "axios";
+import api from "../axios/api";
 
 const StComments = styled.div`
     /* width: 600px; */
@@ -49,7 +49,7 @@ export default function Comments() {
 
     const getPost = async () => {
         try {
-            const { data } = await axios.get(`http://1.244.223.183/api/food/${foodId}/comment`, {
+            const { data } = await api.get(`/api/food/${foodId}/comment`, {
                 headers: {
                     accesstoken: accessToken,
                 },
@@ -65,8 +65,8 @@ export default function Comments() {
         event.preventDefault();
         if (text.trim().length === 0) return alert(" 입력하세요");
         try {
-            const response = await axios.post(
-                `http://1.244.223.183/api/food/${foodId}/comment`,
+            const response = await api.post(
+                `/api/food/${foodId}/comment`,
                 {
                     content: text,
                 },
@@ -87,7 +87,7 @@ export default function Comments() {
 
     const handleDeleted = async (commentId) => {
         try {
-            const response = await axios.delete(`http://1.244.223.183/api/food/4/comment/${commentId}`, {
+            const response = await api.delete(`/api/food/${foodId}/comment/${commentId}`, {
                 headers: {
                     accesstoken: accessToken,
                 },

@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-// import api from "../axios/api";
-import axios from "axios";
+import api from "../axios/api";
 
 const StForm = styled.form`
     height: 75vh;
@@ -93,7 +92,7 @@ export default function SignupPage() {
             return;
         }
         try {
-            const response = await axios.post("http://1.244.223.183/api/user/signup", form);
+            const response = await api.post("/api/user/signup", form);
             console.log("성공:", response.data);
             navigate("/login");
         } catch (error) {
