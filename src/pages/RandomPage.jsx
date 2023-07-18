@@ -4,7 +4,7 @@ import clickImage from "../image/clickImage.png";
 import Loading from "../components/Loading";
 
 import Random from "../components/Random";
-import axios from "axios";
+import api from "../axios/api"
 
 const StContainer = styled.div`
     width: 900px;
@@ -54,7 +54,7 @@ export default function RandomPage() {
         setIsLoading(true);
 
         try {
-            const response = await axios.get(`http://1.244.223.183/api/food/result/random`);
+            const response = await api.get(`/api/food/result/random`);
             setShowResult(true);
             setData(response.data);
             console.log("성공:", response);

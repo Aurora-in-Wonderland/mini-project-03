@@ -3,14 +3,13 @@ import Comments from "../components/Comments";
 
 import styled from "styled-components";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+import api from "../axios/api";
 
 const StContainer = styled.div`
     width: 900px;
     margin: auto;
     background-color: #e4dccf;
-    padding: 50px;
+    padding: 60px;
 
     display: flex;
     flex-direction: column;
@@ -36,7 +35,6 @@ const StContainer = styled.div`
 `;
 
 export default function FinalResultPage() {
-    const params = useParams();
     const [like, setLike] = useState(0);
 
     const foodId = localStorage.getItem("foodId");
@@ -46,7 +44,7 @@ export default function FinalResultPage() {
 
     const likeButton = async (event) => {
         try {
-            const response = await axios.post(`http://1.244.223.183/api/food/${foodId}/like`, null, {
+            const response = await api.post(`/api/food/${foodId}/like`, null, {
                 headers: {
                     accesstoken: accessToken,
                 },

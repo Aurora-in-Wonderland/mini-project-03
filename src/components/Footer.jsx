@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const StFooter = styled.div`
-    height: 100px;
+    height: 13vh;
     background-color: #41613c;
 `;
 

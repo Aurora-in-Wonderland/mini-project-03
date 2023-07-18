@@ -1,9 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import * as S from "./components/style";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
-
+import api from "../axios/api";
 
 function Home() {
     const [ranks, setRanks] = useState([]);
@@ -11,21 +10,31 @@ function Home() {
     useEffect(() => {
         const instances = async () => {
             try {
-            const response = await axios.get(
-            "http://1.244.223.183/api/food/rank");
-            setRanks(response.data);
+                const response = await api.get("/api/food/rank");
+                setRanks(response.data);
             } catch (error) {
-            console.log("에러", error);
+                console.log("에러", error);
             }
-            };
-            instances();
-        }, [])
+        };
+        instances();
+    }, []);
 
     return (
         <S.StContainer>
             <S.StMain>
-                Home
-                <img src="https://blog.kakaocdn.net/dn/cd2MQ5/btqx0q65v5Y/mKwQKWKh0HNtslQkgsktE0/img.jpg" />
+                <S.StRankContainer>
+                    <h4>지금 사람들이 많이 찾는 음식</h4>
+                    <StRankWrapper>
+                        {ranks.map((item) => {
+                            return (
+                                <StRanks key={item.id}>
+                                    <StRankImage src={item.imageUrl}></StRankImage>
+                                    {item.name}
+                                </StRanks>
+                            );
+                        })}
+                    </StRankWrapper>
+                </S.StRankContainer>
                 <S.StBtnGroup>
                     <S.StButton
                         color={S.color.white}
@@ -46,21 +55,6 @@ function Home() {
                         랜덤 메뉴 뽑기
                     </S.StButton>
                 </S.StBtnGroup>
-                <S.StRankContainer>
-                    <h4>지금 사람들이 많이 찾는 음식</h4>
-                    <StRankWrapper>
-                        {
-                            ranks.map((item)=>{
-                                return(
-                                    <StRanks key={item.id}>
-                                        <StRankImage src={item.imageUrl}></StRankImage>
-                                        {item.name}
-                                    </StRanks>
-                                )
-                            })
-                        }
-                    </StRankWrapper>
-                </S.StRankContainer>
             </S.StMain>
         </S.StContainer>
     );
@@ -71,17 +65,16 @@ export default Home;
 const StRankWrapper = styled.div`
     display: flex;
     justify-content: space-around;
-`
+`;
 const StRanks = styled.div`
     width: 180px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-`
+`;
 const StRankImage = styled.img`
     border-radius: 100%;
     object-fit: contain;
-`
-
+`;
 
 // Bearer%20eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLquYDrlaHrlaEiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY4OTU1NzEwMiwiaWF0IjoxNjg5NTUzNTAyfQ.d71Mmca1_yJS9M67J88THQHd5fJLhmHP8TppNwi1DHQ
