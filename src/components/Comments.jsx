@@ -45,10 +45,11 @@ export default function Comments() {
     const [text, setText] = useState("");
 
     const accessToken = localStorage.getItem("accessToken");
+    const foodId = localStorage.getItem("foodId");
 
     const getPost = async () => {
         try {
-            const { data } = await axios.get(`http://1.244.223.183/api/food/4/comment`, {
+            const { data } = await axios.get(`http://1.244.223.183/api/food/${foodId}/comment`, {
                 headers: {
                     accesstoken: accessToken,
                 },
@@ -65,7 +66,7 @@ export default function Comments() {
         if (text.trim().length === 0) return alert(" 입력하세요");
         try {
             const response = await axios.post(
-                "http://1.244.223.183/api/food/4/comment",
+                `http://1.244.223.183/api/food/${foodId}/comment`,
                 {
                     content: text,
                 },

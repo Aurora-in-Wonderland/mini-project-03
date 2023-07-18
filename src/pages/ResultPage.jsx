@@ -1,6 +1,7 @@
-import React ,{useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { useNavigate } from "react-router";
 // import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 const StContainer = styled.div`
@@ -67,70 +68,131 @@ const StButton = styled.button`
 `;
 
 export default function ResultPage() {
+    const [isData, isSetData] = useState(null);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [clickData, setClickData] = useState(null);
+
+    const navigate = useNavigate();
+
+    const accessToken = localStorage.getItem("accessToken");
     const choiceData = {
-        salty : JSON.parse(localStorage.getItem("salty")),
-        spicy : Number(localStorage.getItem("spicy")),
-        world : Number(localStorage.getItem("world")),
-        hot : JSON.parse(localStorage.getItem("hot")),
-        night : JSON.parse(localStorage.getItem("night")),
-      };
-    useEffect(() => {
-        const instances = async () => {
-            try {
-            const response = await axios.post(
-            "http://1.244.223.183/api/food/result",
-              choiceData,
-              {
+        salty: JSON.parse(localStorage.getItem("salty")),
+        spicy: Number(localStorage.getItem("spicy")),
+        world: Number(localStorage.getItem("world")),
+        hot: JSON.parse(localStorage.getItem("hot")),
+        night: JSON.parse(localStorage.getItem("night")),
+    };
+
+    const handleImageClick = (imageData) => {
+        setSelectedImage(imageData);
+        let selectedStatus = null;
+
+        if (imageData === "Image 1 Data") {
+            selectedStatus = isData[0];
+        } else if (imageData === "Image 2 Data") {
+            selectedStatus = isData[1];
+        } else if (imageData === "Image 3 Data") {
+            selectedStatus = isData[2];
+        } else if (imageData === "Image 4 Data") {
+            selectedStatus = isData[3];
+        }
+        setClickData(selectedStatus);
+    };
+
+    const instances = async () => {
+        try {
+            const response = await axios.post("http://1.244.223.183/api/food/result", choiceData, {
                 headers: {
-                Authorization: "Bearer%20eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0ZkxKdVV4cVJoRWVHYjhTR1BTVzBGazQ0MTN0Wk94L1hweW5pelNNUXQ4Z0diNVZYc3o5TTBLYmUzNElzYm54IiwiZXhwIjoxNjg5NzA0MjU4LCJpYXQiOjE2ODk2MTc4NTh9.ksBqKhSYRlslEhiQETdKTD5X2d4buNMnAq7Mlj8hvC8",
-              },
+                    accesstoken: accessToken,
+                },
             });
+            isSetData(response.data);
+            localStorage.removeItem("salty");
+            localStorage.removeItem("spicy");
+            localStorage.removeItem("world");
+            localStorage.removeItem("hot");
+            localStorage.removeItem("night");
+            
             console.log("성공", response);
-            } catch (error) {
+        } catch (error) {
             console.log("에러", error);
-            }
-            };
-            instances();
-      }, [])
+        }
+    };
+
+    useEffect(() => {
+        instances();
+    }, []);
+
+    if (isData == null) {
+        return null;
+    }
+
+    const onClickFinalMenu = async (event) => {
+        const foodId = clickData.id;
+        try {
+            const response = await axios.patch(`http://1.244.223.183/api/food/${foodId}/choice`);
+            console.log("성공:", response);
+            localStorage.setItem("foodId", clickData.id);
+            localStorage.setItem("foodName", clickData.name);
+            localStorage.setItem("imageUrl", clickData.imageUrl);
+
+            navigate(`/food/${foodId}/comment`);
+        } catch (error) {
+            console.error("에러:", error);
+        }
+    };
+
     return (
         <>
             <StContainer>
                 <h1>요기어때가 엄선한 오늘의 추천 메뉴</h1>
                 <h2>마음에 드시는 메뉴를 선택해주세요!</h2>
                 <img
-                    src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
+                    src={isData && isData[0].imageUrl}
                     alt="추천메뉴"
+                    onClick={() => handleImageClick("Image 1 Data")}
+                    style={{
+                        border: selectedImage === "Image 1 Data" ? "5px solid #FFE27C" : "none",
+                    }}
                 />
-                {/* <p>
-                    <AiFillHeart />
-                    <AiOutlineHeart />
-                </p> */}
-                <h1>요리이름</h1>
+                <h1>{isData && isData[0].name}</h1>
                 <p>설명</p>
                 <StSection>
-                    <section>
+                    <section key={isData && isData[1].id}>
                         <img
-                            src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Zm9vZHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
+                            src={isData && isData[1].imageUrl}
                             alt="추천메뉴"
+                            onClick={() => handleImageClick("Image 2 Data")}
+                            style={{
+                                border: selectedImage === "Image 2 Data" ? "5px solid #FFE27C" : "none",
+                            }}
                         />
-                        <p>요리이름</p>
+                        <p>{isData && isData[1].name}</p>
                     </section>
-                    <section>
+                    <section key={isData && isData[2].id}>
                         <img
-                            src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Zm9vZHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
+                            src={isData && isData[2].imageUrl}
                             alt="추천메뉴"
+                            onClick={() => handleImageClick("Image 3 Data")}
+                            style={{
+                                border: selectedImage === "Image 3 Data" ? "5px solid #FFE27C" : "none",
+                            }}
                         />
-                        <p>요리이름</p>
+                        <p>{isData && isData[2].name}</p>
                     </section>
-                    <section>
+                    <section key={isData && isData[3].id}>
                         <img
-                            src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDB8fGZvb2R8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60"
+                            src={isData && isData[3].imageUrl}
                             alt="추천메뉴"
+                            onClick={() => handleImageClick("Image 4 Data")}
+                            style={{
+                                border: selectedImage === "Image 4 Data" ? "5px solid #FFE27C" : "none",
+                            }}
                         />
-                        <p>요리이름</p>
+                        <p>{isData && isData[3].name}</p>
                     </section>
                 </StSection>
-                <StButton>메뉴 선택하고 댓글쓰러 가기</StButton>
+                <StButton onClick={onClickFinalMenu}>메뉴 선택하고 댓글쓰러 가기</StButton>
             </StContainer>
         </>
     );
