@@ -70,6 +70,7 @@ function App() {
 export default App;
 
 const StMain = styled.div`
+    font-family: 'KCCChassam', cursive;
     width: 100%;
     margin: auto;
     background-color: #f0ebe3;
