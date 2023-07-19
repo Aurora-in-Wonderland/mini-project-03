@@ -6,69 +6,6 @@ import { useNavigate } from "react-router";
 
 // import { stat } from "fs";
 
-const StContainer = styled.div`
-    width: 900px;
-    height: 100vh;
-    margin: auto;
-    background-color: #e4dccf;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 60px;
-
-    h1 {
-        font-size: 30px;
-        margin: 10px;
-    }
-    h2 {
-        font-size: 20px;
-    }
-    img {
-        width: 200px;
-        height: 200px;
-        border-radius: 100%;
-        margin: 20px;
-        cursor: pointer;
-    }
-`;
-
-const StSection = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-
-    section {
-        width: 180px;
-        height: 230px;
-        border: 1px solid black;
-        border-radius: 8px;
-        margin: 30px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-        img {
-            width: 150px;
-            height: 150px;
-            border-radius: 100%;
-            align-items: center;
-            cursor: pointer;
-        }
-        p {
-            text-align: center;
-        }
-    }
-`;
-const StButton = styled.button`
-    width: 300px;
-    height: 50px;
-    color: #8dabb5;
-    border: 3px solid #8dabb5;
-    border-radius: 20px;
-    cursor: pointer;
-`;
-
 export default function Random({ status }) {
     const [selectedImage, setSelectedImage] = useState(null);
     const [clickData, setClickData] = useState(null);
@@ -163,3 +100,66 @@ export default function Random({ status }) {
         </>
     );
 }
+
+const StContainer = styled.div`
+    width: 900px;
+    height: 100vh;
+    margin: auto;
+    background-color: #e4dccf;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px;
+
+    h1 {
+        font-size: 30px;
+        margin: 10px;
+    }
+    h2 {
+        font-size: 20px;
+    }
+    img {
+        width: 200px;
+        height: 200px;
+        border-radius: 100%;
+        margin: 20px;
+        cursor: pointer;
+    }
+`;
+
+const StSection = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    section {
+        width: 180px;
+        height: 230px;
+        border: 1px solid black;
+        border-radius: 8px;
+        margin: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        img {
+            width: 150px;
+            height: 150px;
+            border-radius: 100%;
+            align-items: center;
+            cursor: pointer;
+        }
+        p {
+            text-align: center;
+        }
+    }
+`;
+const StButton = styled.button`
+    width: 300px;
+    height: 50px;
+    color: #8dabb5;
+    border: 3px solid #8dabb5;
+    border-radius: 20px;
+    cursor: pointer;
+`;

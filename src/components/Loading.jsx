@@ -3,20 +3,6 @@ import { PulseLoader } from "react-spinners";
 
 import styled from "styled-components";
 
-export const StBackground = styled.header`
-    position: absolute;
-    width: 100vw;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background: #ffffff;
-    z-index: 999;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-`;
-
 export const StLoadingText = styled.div`
     text-align: center;
     font-size: 20px;
@@ -30,3 +16,17 @@ export default function Loading() {
         </StBackground>
     );
 }
+
+export const StBackground = styled.header`
+    position: absolute;
+    width: 100vw;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #ffffff;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
