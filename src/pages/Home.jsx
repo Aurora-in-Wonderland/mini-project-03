@@ -103,3 +103,5 @@ const StRankImage = styled.img`
     border-radius: 100%;
     object-fit: contain;
 `;
+
+

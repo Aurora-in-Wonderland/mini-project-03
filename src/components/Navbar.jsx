@@ -74,6 +74,11 @@ export default function Navbar() {
     const navigate = useNavigate();
     const onClickLogoutButton = () => {
         localStorage.removeItem("accessToken");
+        localStorage.removeItem("authorizationToken");
+        localStorage.removeItem("foodName");
+        localStorage.removeItem("foodId");
+        localStorage.removeItem("username");
+        localStorage.removeItem("imageUrl");
         navigate("/");
     };
     return (

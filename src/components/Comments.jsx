@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { BsFillTrashFill, BsFillPenFill } from "react-icons/bs";
+// import { BsFillTrashFill } from "react-icons/bs";
 import api from "../axios/api";
+import InputForm from "./InputForm";
 
 const StComments = styled.div`
     /* width: 600px; */
@@ -40,19 +41,22 @@ const StButton = styled.button`
     color: #fff;
 `;
 
-export default function Comments() {
+export default function Comments({ setLike }) {
     const [contents, setContents] = useState([]);
     const [text, setText] = useState("");
+    const [comment, setComment] = useState("");
 
-    const accessToken = localStorage.getItem("accessToken");
     const foodId = localStorage.getItem("foodId");
+    const MyName = localStorage.getItem("username");
 
     const getPost = async () => {
         try {
-            const { data } = await api.get(`/api/food/${foodId}/comment`, {
-                headers: {
-                    accesstoken: accessToken,
-                },
+            const response = await api.get(`/api/food/${foodId}/comment`);
+            const { userLike, data } = response.data;
+            setLike(userLike ? 1 : 0);
+            data.forEach((event) => {
+                event.isMine = MyName === event.username ? true : false;
+                event.isModified = false;
             });
             setContents(data);
             console.log("성공", data);
@@ -65,17 +69,9 @@ export default function Comments() {
         event.preventDefault();
         if (text.trim().length === 0) return alert(" 입력하세요");
         try {
-            const response = await api.post(
-                `/api/food/${foodId}/comment`,
-                {
-                    content: text,
-                },
-                {
-                    headers: {
-                        accesstoken: accessToken,
-                    },
-                }
-            );
+            const response = await api.post(`/api/food/${foodId}/comment`, {
+                content: text,
+            });
             setText("");
             setContents([...contents, { content: text, commentId: "" }]);
             getPost();
@@ -85,29 +81,36 @@ export default function Comments() {
         }
     };
 
-    const handleDeleted = async (commentId) => {
-        try {
-            const response = await api.delete(`/api/food/${foodId}/comment/${commentId}`, {
-                headers: {
-                    accesstoken: accessToken,
-                },
-            });
-            setContents(
-                contents.filter((item) => {
-                    return item.commentId !== commentId;
-                })
-            );
-            console.log("성공", response);
-        } catch (error) {
-            if (error.response.data.statusCode === 401) {
-                alert("자기 자신의 댓글만 삭제할 수 있습니다.");
-            }
-            console.log("에러", error);
-        }
-    };
-
     const handleChange = (event) => {
         setText(event.target.value);
+    };
+
+    const commentChangeHandler = (event) => {
+        setComment(event.target.value);
+    };
+
+    const textModifiedHandler = async (event, index, id) => {
+        if (!contents[index].isModified) {
+            contents[index].isModified = true;
+            setComment(contents[index].content);
+        } else {
+            const payload = {
+                content: comment,
+            };
+            try {
+                const res = await api.patch(`/api/food/${foodId}/comment/${id}`, payload);
+                console.log(res);
+                contents[index].content = res.data[0].content;
+                contents[index].isModified = false;
+                const change = [...contents];
+                // 주소값이 바뀌지 않으니 임시로 넘겨줌.
+                setContents(change);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        const change = [...contents];
+        setContents(change);
     };
 
     useEffect(() => {
@@ -126,18 +129,17 @@ export default function Comments() {
                     />
                     <StButton>입력</StButton>
                 </form>
-                {contents.map((item) => (
+                {contents.map((item, index) => (
                     <section key={item.commentId}>
                         <p>{item.username}</p>
-                        <p>{item.content}</p>
-                        <div>
-                            <button>
-                                <BsFillPenFill />
-                            </button>
-                            <button>
-                                <BsFillTrashFill onClick={() => handleDeleted(item.commentId)} />
-                            </button>
-                        </div>
+                        <InputForm
+                            contents={contents}
+                            item={item}
+                            isMine={item.isMine}
+                            foodId={foodId}
+                            index={index}
+                            setContents={setContents}
+                        />
                     </section>
                 ))}
             </StComments>
