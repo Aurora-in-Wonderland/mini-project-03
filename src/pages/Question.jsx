@@ -1,40 +1,27 @@
 import { useNavigate } from "react-router-dom";
-import * as S from "./components/style";
 import { styled } from "styled-components";
+import { StButton, StButtonGroup, StTitle, StPageCount, Stcontainer } from './Questions';
 
 function Question() {
   const navigate = useNavigate();
   return (
-    <S.StContainer>
-      <S.StMain>
-        <QuestionImage>뭔가 이미지 하나 들어가고</QuestionImage>
+    <Stcontainer>
+      <div>
           <div>
-            <div>지금 땡기는 음식은?</div>
-            <ButtonGroup>
-              <S.StButton onClick={()=> {
+            <StTitle>지금 땡기는 음식은?</StTitle>
+            <StButtonGroup>
+              <StButton onClick={()=> {
                 localStorage.setItem('salty',false);
-                navigate("0")}}>단</S.StButton>
-              <S.StButton onClick={()=> {
+                navigate("0")}}>단</StButton>
+              <StButton onClick={()=> {
                 localStorage.setItem('salty',true);
-                navigate("0")}}>짠</S.StButton>
-            </ButtonGroup>
-            <div>1 / 5</div>
+                navigate("0")}}>짠</StButton>
+            </StButtonGroup>
+            <StPageCount>1 / 5</StPageCount>
           </div>
-      </S.StMain>
-    </S.StContainer>
+      </div>
+    </Stcontainer>
   )
 }
 export default Question;
 
-const QuestionImage = styled.div`
-  border: 1px solid;
-  height: 300px;
-`
-const ButtonGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 400px;
-  gap: 10px;
-  margin: 0 auto;
-  margin-bottom: 100px;
-`
