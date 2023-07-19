@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import * as S from "./components/style";
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
+import { Stcontainer } from './Questions';
 import api from "../axios/api";
 
 function Home() {
@@ -20,52 +20,79 @@ function Home() {
     }, []);
 
     return (
-        <S.StContainer>
-            <S.StMain>
-                <S.StRankContainer>
-                    <h4>지금 사람들이 많이 찾는 음식</h4>
-                    <StRankWrapper>
-                        {ranks.map((item) => {
-                            return (
-                                <StRanks key={item.id}>
-                                    <StRankImage src={item.imageUrl}></StRankImage>
-                                    {item.name}
-                                </StRanks>
-                            );
-                        })}
-                    </StRankWrapper>
-                </S.StRankContainer>
-                <S.StBtnGroup>
-                    <S.StButton
-                        color={S.color.white}
-                        background={S.color.yellow}
+        <Stcontainer>
+            <div>
+                <StRankTitle> ⭐ 지금 사람들이 많이 찾는 음식</StRankTitle>
+                <StRankContainer>
+                    {ranks.map((item, index) => {
+                        return (
+                            <StRanks key={item.id}>
+                                <StRankImage src={item.imageUrl}></StRankImage>
+                                {index}. {item.name}
+                            </StRanks>
+                        );
+                    })}
+                </StRankContainer>
+                <StButtonGroup>
+                    <StButton
                         onClick={() => {
                             navigate("/question");
                         }}
                     >
                         취향대로 추천받기
-                    </S.StButton>
-                    <S.StButton
-                        color={S.color.yellow}
-                        background={S.color.white}
+                    </StButton>
+                    <StButton
                         onClick={() => {
                             navigate("/random");
                         }}
                     >
                         랜덤 메뉴 뽑기
-                    </S.StButton>
-                </S.StBtnGroup>
-            </S.StMain>
-        </S.StContainer>
+                    </StButton>
+                </StButtonGroup>
+            </div>
+        </Stcontainer>
     );
 }
 
 export default Home;
 
-const StRankWrapper = styled.div`
+const StRankTitle = styled.h2`
+    margin-top: 8vh;
+    margin-bottom: 2vh;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 30px;
+    color: #114E60;
+`
+const StRankContainer = styled.div`
     display: flex;
-    justify-content: space-around;
-`;
+    justify-content: space-between;
+    height: 30vh;
+    margin-bottom: 5vh;
+`
+const StRank = styled.div`
+    border: 1px solid;
+`
+const StButtonGroup = styled.div`
+    margin-bottom: 100px;
+    text-align: center;
+`
+const StButton = styled.button`
+    font-size: 18px;
+    font-weight: 500;
+    height: 50px;
+    width: 200px;
+    margin: 20px;
+    border-radius: 20px;
+    background-color: #114E60;
+    border: 3px solid #114E60;
+    color : #F9F9F9;
+
+    &:hover {
+        background-color: #F9F9F9;
+        color: #114E60;
+    }
+`
 const StRanks = styled.div`
     width: 180px;
     display: flex;
@@ -76,4 +103,5 @@ const StRankImage = styled.img`
     border-radius: 100%;
     object-fit: contain;
 `;
+
 
