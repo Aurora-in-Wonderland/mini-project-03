@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 // import Comments from "./Comments";
-import axios from "axios";
+import api from "../axios/api";
 import { useNavigate } from "react-router";
 
 // import { stat } from "fs";
@@ -95,7 +95,7 @@ export default function Random({ status }) {
     const onClickRandomMenu = async (event) => {
         const foodId = clickData?.id;
         try {
-            const response = await axios.patch(`http://1.244.223.183/api/food/${foodId}/choice`);
+            const response = await api.patch(`/api/food/${foodId}/choice`);
             console.log("성공:", response);
             localStorage.setItem("foodId", clickData.id);
             localStorage.setItem("foodName", clickData.name);
