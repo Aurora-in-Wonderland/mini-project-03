@@ -22,13 +22,18 @@ function Home() {
     return (
         <Stcontainer>
             <div>
-                <StRankTitle> ⭐ 지금 사람들이 많이 찾는 음식</StRankTitle>
+                <StRankTitle> 지금 사람들이 많이 찾는 음식 🔥</StRankTitle>
                 <StRankContainer>
-                    {ranks.map((item, index) => {
+                    {ranks.map((item) => {
                         return (
-                            <StRanks key={item.id}>
+                            <StRanks key={item.id} onClick={()=>{
+                                localStorage.setItem("foodId", item.id);
+                                localStorage.setItem("foodName", item.name);
+                                localStorage.setItem("imageUrl", item.imageUrl);
+                                navigate(`/food/${item.id}/comment`);
+                            }}>
                                 <StRankImage src={item.imageUrl}></StRankImage>
-                                {index}. {item.name}
+                                <StRankName>{item.name}</StRankName>
                             </StRanks>
                         );
                     })}
@@ -57,7 +62,7 @@ function Home() {
 export default Home;
 
 const StRankTitle = styled.h2`
-    margin-top: 8vh;
+    margin-top: 5vh;
     margin-bottom: 2vh;
     font-size: 20px;
     font-weight: 600;
@@ -66,12 +71,9 @@ const StRankTitle = styled.h2`
 `
 const StRankContainer = styled.div`
     display: flex;
-    justify-content: space-between;
-    height: 30vh;
+    justify-content: space-around;
+    height: 25vh;
     margin-bottom: 5vh;
-`
-const StRank = styled.div`
-    border: 1px solid;
 `
 const StButtonGroup = styled.div`
     margin-bottom: 100px;
@@ -97,11 +99,24 @@ const StRanks = styled.div`
     width: 180px;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     gap: 10px;
-`;
+    align-items: center;
+    padding: 10px;
+    border-radius: 30px;
+    &:hover {
+        background-color: rgba(0,0,0,0.3);
+    }
+`
 const StRankImage = styled.img`
     border-radius: 100%;
+    width: 90%;
+    max-width: 200px;
     object-fit: contain;
-`;
-
-
+    border: 3px solid #41613C;
+`
+const StRankName = styled.h4`
+    font-size: 18px;
+    padding: 5px;
+    text-align: center;
+`
