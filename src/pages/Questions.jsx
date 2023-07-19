@@ -1,8 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react"; 
-import * as S from "./components/style";
 import { styled } from "styled-components";
-import axios from "axios";
 
 function Question() {
   const questions =[
@@ -111,78 +108,84 @@ function Question() {
   const pageNum = Number(param.id);
   const thisQuestion = questions[pageNum];
   const navigate = useNavigate();
-  // const choiceData = {
-  //       salty : JSON.parse(localStorage.getItem("salty")),
-  //       spicy : Number(localStorage.getItem("spicy")),
-  //       world : Number(localStorage.getItem("world")),
-  //       hot : JSON.parse(localStorage.getItem("hot")),
-  //       night : JSON.parse(localStorage.getItem("night")),
-  //     }
-  // const accessToken = localStorage.getItem("accessToken");
-  // const handleChoiceSubmit = async () => {
-  //   try {
-  //   const response = await axios.post(
-  //   "http://1.244.223.183/api/food/result",
-  //     choiceData,
-  //     {
-  //       headers: {
-  //       Authorization: "Bearer%20eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0ZkxKdVV4cVJoRWVHYjhTR1BTVzBGazQ0MTN0Wk94L1hweW5pelNNUXQ4Z0diNVZYc3o5TTBLYmUzNElzYm54IiwiZXhwIjoxNjg5NzA0MjU4LCJpYXQiOjE2ODk2MTc4NTh9.ksBqKhSYRlslEhiQETdKTD5X2d4buNMnAq7Mlj8hvC8",
-
-  //     },
-  //   });
-  //   console.log("성공", response);
-  //   } catch (error) {
-  //   console.log("에러", error);
-  //   }
-  //   };
-
 
   return (
-    <S.StContainer>
-      <S.StMain>
-        <QuestionImage>뭔가 이미지 하나 들어가고</QuestionImage>
+    <Stcontainer>
+      <div>
+        {/* <img>뭔가 이미지 하나 들어가고</img> */}
           { pageNum<=2 && <div>
-            <div>{thisQuestion.script}</div>
-            <ButtonGroup>
+            <StTitle>{thisQuestion.script}</StTitle>
+            <StButtonGroup>
               {
                 thisQuestion.option.map((item)=>{
-                  return <S.StButton key={item.id} onClick={()=>{
+                  return <StButton key={item.id} onClick={()=>{
                     localStorage.setItem(thisQuestion.id, item.value);
-                    navigate(`../question/${pageNum+1}`)}}>{item.answer}</S.StButton>
+                    navigate(`../question/${pageNum+1}`)}}>{item.answer}</StButton>
                 })
               }
-            </ButtonGroup>
+            </StButtonGroup>
           </div>
           }
           { pageNum===3 && <div>
-            <div>{thisQuestion.script}</div>
-            <ButtonGroup>
+            <StTitle>{thisQuestion.script}</StTitle>
+            <StButtonGroup>
               {
                 thisQuestion.option.map((item)=>{
-                  return <S.StButton key={item.id} onClick={()=>{
+                  return <StButton key={item.id} onClick={()=>{
                     localStorage.setItem(thisQuestion.id, item.value);
-                    // handleChoiceSubmit();
-                    navigate("/food/result")}}>{item.answer}</S.StButton>
+                    navigate("/food/result")}}>{item.answer}</StButton>
                 })
               }
-            </ButtonGroup>
+            </StButtonGroup>
           </div>}
-          <div>{pageNum+2} / 5</div>
-      </S.StMain>
-    </S.StContainer>
+          <StPageCount>{pageNum+2} / 5</StPageCount>
+      </div>
+    </Stcontainer>
   )
 }
 export default Question;
 
-const QuestionImage = styled.div`
-  border: 1px solid;
-  height: 300px;
+export const StButton = styled.button`
+  font-size: 16px;
+  width: 300px;
+  padding: 10px 30px;
+  border-radius: 30px;
+  background: none;
+  border: 3px solid #114E60;
+  color: #114E60;
+
+  &:hover {
+    background-color: #114E60;
+    color: #F0EBE3;
+  }
 `
-const ButtonGroup = styled.div`
+export const StButtonGroup = styled.div`
+  margin: auto 0;
   display: flex;
   flex-direction: column;
-  width: 400px;
-  gap: 10px;
+  text-align: center;
+  align-items: center;
+  gap: 15px;
+`
+export const StTitle = styled.h2`
+  margin-top: 50px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 22px;
+`
+export const StPageCount = styled.h4`
+  font-size: 20px;
+  color: #8DABB5;
+  text-align: center;
+  margin: 100px 0 40px;
+`
+export const Stcontainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 74vh;
   margin: 0 auto;
-  margin-bottom: 100px;
+  max-width: 1200px;
+  overflow: hidden;
 `
