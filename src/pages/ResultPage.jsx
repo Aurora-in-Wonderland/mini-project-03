@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router";
 // import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import Loading from "../components/Loading";
-import api from "../axios/api"
+import api from "../axios/api";
 
 const StContainer = styled.div`
     width: 900px;
@@ -103,7 +103,7 @@ export default function ResultPage() {
 
     const instances = async () => {
         try {
-            const response = await api.post("http://1.244.223.183/api/food/result", choiceData, {
+            const response = await api.post("/api/food/result", choiceData, {
                 headers: {
                     accesstoken: accessToken,
                 },
@@ -144,9 +144,7 @@ export default function ResultPage() {
         } catch (error) {
             console.error("에러:", error);
         } finally {
-            setTimeout(() => {
-                setLoading(false);
-            }, 2000);
+            setLoading(false);
         }
     };
 

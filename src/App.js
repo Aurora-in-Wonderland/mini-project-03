@@ -12,6 +12,7 @@ import SignupPage from "./pages/SignupPage";
 import ResultPage from "./pages/ResultPage";
 import RandomPage from "./pages/RandomPage";
 import FinalResultPage from "./pages/FinalResultPage";
+import MyPage from "./pages/MyPage";
 
 function App() {
     return (
@@ -52,6 +53,10 @@ function App() {
                     <Route
                         path="/food/:foodId/comment"
                         element={<FinalResultPage />}
+                    />
+                    <Route
+                        path="/mypage/:id"
+                        element={<MyPage />}
                     />
                 </Routes>
             </StMain>

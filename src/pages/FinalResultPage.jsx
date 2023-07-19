@@ -75,7 +75,7 @@ export default function FinalResultPage() {
                 )}
                 <h1>{foodName}</h1>
                 <p>설명</p>
-                <Comments />
+                <Comments setLike={setLike}/>
             </StContainer>
         </div>
     );
