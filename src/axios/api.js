@@ -53,6 +53,7 @@ instance.interceptors.response.use(
                 })
             );
         } else {
+            alert("로그인 후 사용 가능합니다.")
             document.location.href = "/login";
         }
         console.log("End");
