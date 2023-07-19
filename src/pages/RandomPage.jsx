@@ -50,7 +50,7 @@ export default function RandomPage() {
 }
 
 const StContainer = styled.div`
-    width: 900px;
+    width: 100wh;
     height: 65vh;
     margin: auto;
     background-color: #e4dccf;
@@ -58,7 +58,7 @@ const StContainer = styled.div`
 
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
+    justify-content: center;
     align-items: center;
 
     h1 {
@@ -85,5 +85,10 @@ const StContainer = styled.div`
             -ms-transform: scale(1.5);
             -o-transform: scale(1.5);
         }
+    }
+    @media (max-width: 768px) {
+        width: 100%;
+        height: 73vh;
+        padding: 2vh 0;
     }
 `;

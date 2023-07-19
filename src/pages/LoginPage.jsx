@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import api from "../axios/api";
@@ -48,12 +48,16 @@ export default function LoginPage() {
         setForm({ ...form, [name]: value });
     };
 
+    useEffect(() => {
+        localStorage.clear();
+    }, []);
     return (
         <>
             <StForm onSubmit={handleLoginSubmit}>
                 <div>
                     <label htmlFor="name">ID</label>
                     <input
+                        autoFocus
                         type="text"
                         id="address"
                         name="address"

@@ -31,7 +31,7 @@ instance.interceptors.response.use(
         console.log(response);
         if (response.headers.accesstoken !== undefined) localStorage.setItem("accessToken", response.headers.accesstoken);
         if (response.headers.authorization !== undefined) localStorage.setItem("authorizationToken", response.headers.authorization);
-        if (response.headers.username !== undefined) localStorage.setItem("username", response.headers.username);
+        if (response.data.username !== undefined) localStorage.setItem("username", response.data.username);
         return response;
     },
 

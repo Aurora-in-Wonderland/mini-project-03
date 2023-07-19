@@ -6,8 +6,10 @@ import api from "../axios/api";
 export default function MyPage() {
     const [image, setImage] = useState(ProfilePicture);
     const [file, setFile] = useState("");
-    const [data, setData] = useState("");
+    const [isData, setIsData] = useState("");
+    const [lists, setLists] = useState("");
     const fileInput = useRef(null);
+    const [wait, setWait] = useState(true);
 
     const onChange = (e) => {
         if (e.target.files[0]) {
@@ -31,11 +33,27 @@ export default function MyPage() {
     const getMyPage = async () => {
         try {
             const response = await api.get(`/api/user/introduce`);
+            setIsData(response.data);
+            const List = [...response.data.myLike];
+            List.forEach((e) => {
+                e.onLoad = false;
+            });
+            setLists(List);
+            setWait(false);
             console.log("성공", response);
         } catch (error) {
             console.log("에러", error);
         }
     };
+
+    const loadImage = (e, index) => {
+        if (!lists[index].onLoad) {
+            lists[index].onLoad = true;
+            const ch = [...lists];
+            setLists(ch);
+        }
+    };
+
     useEffect(() => {
         getMyPage();
     }, []);
@@ -54,6 +72,9 @@ export default function MyPage() {
 
     // 둘 다 엑세스 토큰이 없을 때(리프레시토큰 확인차) 무한 렌더링 일어납니다.
 
+    if (wait) {
+        return <div></div>;
+    }
     return (
         <>
             <StBack>
@@ -78,27 +99,38 @@ export default function MyPage() {
                             />
                         </>
                         <StData>
-                            <p>ID: </p>
+                            <p>ID: {isData.username}</p>
                             <p>Username:</p>
-                            <textarea
-                                placeholder="자기소개를 입력해주세요"
-                                className="introduction"
-                                name="memberDescription"
-                                style={{ resize: "none" }}
-                            />
+                            {isData.introduce === null ? (
+                                <textarea
+                                    placeholder="자기소개를 입력해주세요"
+                                    className="introduction"
+                                    name="memberDescription"
+                                    style={{ resize: "none" }}
+                                />
+                            ) : (
+                                <textarea
+                                    placeholder="자기소개를 입력해주세요"
+                                    className="introduction"
+                                    name="memberDescription"
+                                    value={isData.introduce}
+                                    style={{ resize: "none" }}
+                                />
+                            )}
                         </StData>
                     </StProfile>
                 </StContainer>
                 <StLikeContainer>
                     <StLikeTitle>관심 음식😋</StLikeTitle>
                     <StLikeWrapper>
-                        <section>
-                            <img
-                                src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Zm9vZHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
-                                alt="음식내역"
-                            />
-                            <p>음식 이름</p>
-                        </section>
+                        {lists.map((item, index) =>
+                            item.onLoad ? (
+                                <section key={item.id}>
+                                    
+                                    <p>{item.name}</p>
+                                </section>
+                            ) : null
+                        )}
                     </StLikeWrapper>
                 </StLikeContainer>
             </StBack>

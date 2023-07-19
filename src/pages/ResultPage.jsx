@@ -148,14 +148,14 @@ export default function ResultPage() {
 }
 
 const StContainer = styled.div`
-    width: 100%;
+    width: 60vw;
     margin: auto;
     background-color: #e4dccf;
     padding: 50px;
 
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
+    justify-content: center;
     align-items: center;
 
     h1 {
@@ -171,6 +171,13 @@ const StContainer = styled.div`
         border-radius: 100%;
         margin: 20px;
         cursor: pointer;
+    }
+    @media (max-width: 768px) {
+        width: 100%;
+        padding: 5vh 0;
+        h1 {
+            font-size: 25px;
+        }
     }
 `;
 
@@ -198,6 +205,22 @@ const StSection = styled.div`
         }
         p {
             text-align: center;
+        }
+    }
+    @media (max-width: 768px) {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        section {
+            width: 7rem;
+            height: 10rem;
+            margin: 8px;
+            img {
+                width: 5rem;
+                height: 5rem;
+            }
         }
     }
 `;
