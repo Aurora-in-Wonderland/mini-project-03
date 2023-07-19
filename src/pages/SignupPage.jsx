@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import api from "../axios/api";
+import axios from "axios";
+
+const api = axios.create({
+    baseURL: process.env.REACT_APP_SERVER_URL,
+});
 
 export default function SignupPage() {
     const [form, setForm] = useState({ username: "", address: "", password: "", confirm_password: "" });
@@ -11,6 +15,10 @@ export default function SignupPage() {
         passwordCorrect: true,
         confirm_passwordCorrect: true,
     });
+    const [outName, setOutName] = useState(false);
+    const [outNameText, setOutNameText] = useState("");
+    const [outAddress, setOutAddress] = useState(false);
+    const [outAddressText, setOutAddressText] = useState("");
     const navigate = useNavigate();
 
     const handleSigninSubmit = async (event) => {
@@ -72,28 +80,94 @@ export default function SignupPage() {
         setForm({ ...form, [name]: value });
     };
 
+    const nameInHandler = (event) => {
+        setOutName(false);
+    };
+
+    const nameOutHandler = async (event) => {
+        try {
+            const response = await api.post("/api/user/signup/username", {
+                username: form.username,
+            });
+            console.log("성공:", response.data);
+        } catch (error) {
+            if (error.response.status === 409) {
+                setOutNameText("같은 이름을 이미 사용 중인 사람이 있습니다. 다른 이름을 사용해주세요.");
+            }
+            setOutName(true);
+            console.error("에러:", error);
+        }
+    };
+
+    const addressInHandler = (event) => {
+        setOutAddress(false);
+    };
+
+    const addressOutHandler = async (event) => {
+        try {
+            const response = await api.post("/api/user/signup/address", {
+                address: form.address,
+            });
+            console.log("성공:", response.data);
+        } catch (error) {
+            if (error.response.status === 409) {
+                setOutAddressText("같은 ID를 이미 사용 중인 사람이 있습니다. 다른 ID를 사용해주세요.");
+            } else if (error.response.status === 406) {
+                setOutAddressText("ID는 영어 소문자와 숫자로 이루어진 4-12글자여야 합니다.");
+            }
+            setOutAddress(true);
+            console.error("에러:", error);
+        }
+    };
+    useEffect(() => {
+        console.log(outAddressText);
+    }, []);
+
     return (
         <>
             <StForm onSubmit={handleSigninSubmit}>
-                <div>
-                    <label htmlFor="username">User name</label>
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        value={form.username}
-                        onChange={handleChange}
-                    />
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
+                    <div style={{ textAlign: "left" }}>
+                        <label htmlFor="username">User name</label>
+                        <input
+                            autoFocus
+                            type="text"
+                            id="username"
+                            name="username"
+                            value={form.username}
+                            onChange={handleChange}
+                            onFocus={nameInHandler}
+                            onBlur={nameOutHandler}
+                        />
+                    </div>
+                    <div style={{ height: "30px" }}>{outName ? <p style={{ color: "red" }}>{outNameText}</p> : null}</div>
                 </div>
-                <div>
-                    <label htmlFor="id">ID</label>
-                    <input
-                        type="text"
-                        id="address"
-                        name="address"
-                        value={form.address}
-                        onChange={handleChange}
-                    />
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
+                    <div style={{ textAlign: "left" }}>
+                        <label htmlFor="id">ID</label>
+                        <input
+                            type="text"
+                            id="address"
+                            name="address"
+                            value={form.address}
+                            onChange={handleChange}
+                            onFocus={addressInHandler}
+                            onBlur={addressOutHandler}
+                        />
+                    </div>
+                    <div style={{ height: "30px" }}>{outAddress ? <p style={{ color: "red" }}>{outAddressText}</p> : null}</div>
                 </div>
                 <div>
                     <label htmlFor="password">Password</label>

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
-import { Stcontainer } from './Questions';
+import { Stcontainer } from "./Questions";
 import api from "../axios/api";
 
 function Home() {
@@ -26,12 +26,15 @@ function Home() {
                 <StRankContainer>
                     {ranks.map((item) => {
                         return (
-                            <StRanks key={item.id} onClick={()=>{
-                                localStorage.setItem("foodId", item.id);
-                                localStorage.setItem("foodName", item.name);
-                                localStorage.setItem("imageUrl", item.imageUrl);
-                                navigate(`/food/${item.id}/comment`);
-                            }}>
+                            <StRanks
+                                key={item.id}
+                                onClick={() => {
+                                    localStorage.setItem("foodId", item.id);
+                                    localStorage.setItem("foodName", item.name);
+                                    localStorage.setItem("imageUrl", item.imageUrl);
+                                    navigate(`/food/${item.id}/comment`);
+                                }}
+                            >
                                 <StRankImage src={item.imageUrl}></StRankImage>
                                 <StRankName>{item.name}</StRankName>
                             </StRanks>
@@ -63,22 +66,22 @@ export default Home;
 
 const StRankTitle = styled.h2`
     margin-top: 5vh;
-    margin-bottom: 2vh;
+    margin-bottom: 5vh;
     font-size: 30px;
     font-weight: 600;
     line-height: 30px;
-    color: #114E60;
-`
+    color: #114e60;
+`;
 const StRankContainer = styled.div`
     display: flex;
     justify-content: space-around;
     height: 25vh;
     margin-bottom: 5vh;
-`
+`;
 const StButtonGroup = styled.div`
     margin-bottom: 100px;
     text-align: center;
-`
+`;
 const StButton = styled.button`
     font-size: 18px;
     font-weight: 500;
@@ -86,15 +89,15 @@ const StButton = styled.button`
     width: 200px;
     margin: 20px;
     border-radius: 20px;
-    background-color: #114E60;
-    border: 3px solid #114E60;
-    color : #F9F9F9;
+    background-color: #114e60;
+    border: 3px solid #114e60;
+    color: #f9f9f9;
 
     &:hover {
-        background-color: #F9F9F9;
-        color: #114E60;
+        background-color: #f9f9f9;
+        color: #114e60;
     }
-`
+`;
 const StRanks = styled.div`
     width: 180px;
     display: flex;
@@ -105,18 +108,18 @@ const StRanks = styled.div`
     padding: 10px;
     border-radius: 30px;
     &:hover {
-        background-color: rgba(0,0,0,0.3);
+        background-color: rgba(0, 0, 0, 0.3);
     }
-`
+`;
 const StRankImage = styled.img`
     border-radius: 100%;
     width: 90%;
     max-width: 200px;
     object-fit: contain;
-    border: 3px solid #41613C;
-`
+    border: 3px solid #41613c;
+`;
 const StRankName = styled.h4`
     font-size: 18px;
     padding: 5px;
     text-align: center;
-`
+`;

@@ -53,10 +53,10 @@ export default function FinalResultPage() {
 }
 
 const StContainer = styled.div`
-    width: 100vw;
+    width: 60%;
     margin: auto;
     background-color: #e4dccf;
-    padding: 10%;
+    padding: 5%;
 
     display: flex;
     flex-direction: column;
@@ -79,40 +79,15 @@ const StContainer = styled.div`
         height: 30px;
         color: #d13b40;
     }
+    width: 768px;
+
+    @media (max-width: 1024px) {
+        width: 768px;
+        padding: 10% 0;
+    }
 
     @media (max-width: 768px) {
-        /* width: 100vw;
-        margin: auto;
-        background-color: #e4dccf;
-        padding: 10%;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center; */
-
-        h1 {
-            font-size: 1.7rem;
-            margin: 10px;
-        }
-        img {
-            width: 200px;
-            height: 200px;
-            border-radius: 100%;
-            margin: 20px;
-            cursor: pointer;
-        }
-        .like {
-            width: 30px;
-            height: 30px;
-            color: #d13b40;
-        }
-        /* width: 100%;
-        h1 {
-            font-size: 2rem;
-        }
-        img {
-            width: 4rem;
-        } */
+        width: 100%;
+        padding: 10% 0;
     }
 `;

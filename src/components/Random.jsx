@@ -102,13 +102,14 @@ export default function Random({ status }) {
 }
 
 const StContainer = styled.div`
-    width: 900px;
-    height: 100vh;
+    width: 60vw;
+    /* height: 100vh; */
     margin: auto;
     background-color: #e4dccf;
 
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     padding: 60px;
 
@@ -125,6 +126,11 @@ const StContainer = styled.div`
         border-radius: 100%;
         margin: 20px;
         cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+        width: 100%;
+        padding: 5vh 0;
     }
 `;
 
@@ -152,6 +158,22 @@ const StSection = styled.div`
         }
         p {
             text-align: center;
+        }
+    }
+
+    @media (max-width: 768px) {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        section {
+            width: 7rem;
+            height: 10rem;
+            margin: 8px;
+            img {
+                width: 5rem;
+                height: 5rem;
+            }
         }
     }
 `;
