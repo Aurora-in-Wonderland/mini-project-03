@@ -73,7 +73,8 @@ export default function MyPage() {
                     </StData>
                 </StContainer>
                 <StLikeContainer>
-                    <h1>관심 음식😋</h1>
+                    <StLikeTitle>관심 음식😋</StLikeTitle>
+                    <StLikeWrapper>
                     <section>
                         <img
                             src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Zm9vZHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
@@ -81,6 +82,7 @@ export default function MyPage() {
                         />
                         <p>음식 이름</p>
                     </section>
+                    </StLikeWrapper>
                 </StLikeContainer>
             </StBack>
         </>
@@ -89,7 +91,7 @@ export default function MyPage() {
 
 const StBack = styled.div`
     background-color: #f0ebe3;
-    height: 1000px;
+    height: 1200px;
 `;
 const StContainer = styled.div`
     width: 1000px;
@@ -125,6 +127,7 @@ const StData = styled.div`
 
 const StLikeContainer = styled.div`
     width: 1000px;
+    max-height: 490px;
     margin: auto;
     margin-top: 7%;
     margin-bottom: 7%;
@@ -132,18 +135,30 @@ const StLikeContainer = styled.div`
     border: 3px solid #41613c;
     border-radius: 20px;
     display: flex;
-    flex-direction: row;
-
-    section{
-        width: 800px;
-        height: 100px;
-        border: 3px solid #41613c;
-    }
-
-    img {
-        width: 70px;
-        height: 70px;
-        margin: 20px;
-        border-radius: 100%;
-    }
+    flex-direction: column;
+    overflow: hidden;
 `;
+const StLikeTitle = styled.h1`
+    font-size: 25px;
+    padding-bottom: 30px;
+`
+const StLikeWrapper = styled.div`
+    gap: 20px;
+    display: flex;
+    flex-wrap : wrap;
+    section{
+        width: 150px;
+        text-align: center;
+        background-color:rgba(65, 97, 60, 0.2);
+        border-radius: 10px;
+        margin-bottom: 10px;
+        padding: 25px 15px;
+    }
+    img {
+        width: 120px;
+        height: 120px;
+        border-radius: 100%;
+        margin-bottom: 20px;
+        border: 2px solid white;
+    }
+`
