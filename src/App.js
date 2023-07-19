@@ -55,7 +55,7 @@ function App() {
                         element={<FinalResultPage />}
                     />
                     <Route
-                        path="/mypage/:id"
+                        path="/mypage"
                         element={<MyPage />}
                     />
                 </Routes>

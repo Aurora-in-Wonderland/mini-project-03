@@ -5,69 +5,6 @@ import { useNavigate } from "react-router";
 import Loading from "../components/Loading";
 import api from "../axios/api";
 
-const StContainer = styled.div`
-    width: 900px;
-    margin: auto;
-    background-color: #e4dccf;
-    padding: 50px;
-
-    display: flex;
-    flex-direction: column;
-    /* justify-content: center; */
-    align-items: center;
-
-    h1 {
-        font-size: 30px;
-        margin: 10px;
-    }
-    h2 {
-        font-size: 20px;
-    }
-    img {
-        width: 200px;
-        height: 200px;
-        border-radius: 100%;
-        margin: 20px;
-        cursor: pointer;
-    }
-`;
-
-const StSection = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-
-    section {
-        width: 180px;
-        height: 230px;
-        border: 1px solid black;
-        border-radius: 8px;
-        margin: 30px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-        img {
-            width: 150px;
-            height: 150px;
-            border-radius: 100%;
-            align-items: center;
-            cursor: pointer;
-        }
-        p {
-            text-align: center;
-        }
-    }
-`;
-const StButton = styled.button`
-    width: 300px;
-    height: 50px;
-    color: #8dabb5;
-    border: 3px solid #8dabb5;
-    border-radius: 20px;
-    cursor: pointer;
-`;
-
 export default function ResultPage() {
     const [isData, isSetData] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
@@ -201,7 +138,7 @@ export default function ResultPage() {
                     </section>
                 </StSection>
                 {!clickData ? (
-                    <StButton onClick={()=>alert("메뉴를 클릭해주세요.")}>메뉴 선택하고 댓글쓰러 가기</StButton>
+                    <StButton onClick={() => alert("메뉴를 클릭해주세요.")}>메뉴 선택하고 댓글쓰러 가기</StButton>
                 ) : (
                     <StButton onClick={onClickFinalMenu}>메뉴 선택하고 댓글쓰러 가기</StButton>
                 )}
@@ -209,3 +146,66 @@ export default function ResultPage() {
         </>
     );
 }
+
+const StContainer = styled.div`
+    width: 900px;
+    margin: auto;
+    background-color: #e4dccf;
+    padding: 50px;
+
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+
+    h1 {
+        font-size: 30px;
+        margin: 10px;
+    }
+    h2 {
+        font-size: 20px;
+    }
+    img {
+        width: 200px;
+        height: 200px;
+        border-radius: 100%;
+        margin: 20px;
+        cursor: pointer;
+    }
+`;
+
+const StSection = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    section {
+        width: 180px;
+        height: 230px;
+        border: 1px solid black;
+        border-radius: 8px;
+        margin: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        img {
+            width: 150px;
+            height: 150px;
+            border-radius: 100%;
+            align-items: center;
+            cursor: pointer;
+        }
+        p {
+            text-align: center;
+        }
+    }
+`;
+const StButton = styled.button`
+    width: 300px;
+    height: 50px;
+    color: #8dabb5;
+    border: 3px solid #8dabb5;
+    border-radius: 20px;
+    cursor: pointer;
+`;

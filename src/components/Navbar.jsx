@@ -4,6 +4,59 @@ import styled from "styled-components";
 import { BsFillPersonFill } from "react-icons/bs";
 import logo from "../image/logo.png";
 
+export default function Navbar() {
+    const accessToken = localStorage.getItem("accessToken");
+    const navigate = useNavigate();
+    const onClickLogoutButton = () => {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("authorizationToken");
+        localStorage.removeItem("foodName");
+        localStorage.removeItem("foodId");
+        localStorage.removeItem("username");
+        localStorage.removeItem("imageUrl");
+        navigate("/");
+    };
+    return (
+        <>
+            <Nav>
+                <Link to="/">
+                    <img
+                        src={logo}
+                        alt="요기어때 로고"
+                    />
+                </Link>
+
+                {!accessToken ? (
+                    <StUnLogin>
+                        <button
+                            onClick={() => {
+                                navigate("/login");
+                            }}
+                        >
+                            LOG IN
+                        </button>
+                        <button
+                            onClick={() => {
+                                navigate("/signup");
+                            }}
+                        >
+                            SIGN UP
+                        </button>
+                    </StUnLogin>
+                ) : (
+                    <StLogin>
+                        <button onClick={onClickLogoutButton}>LOG OUT</button>
+                        <BsFillPersonFill
+                            className="human"
+                            onClick={() => navigate(`/mypage`)}
+                        />
+                    </StLogin>
+                )}
+            </Nav>
+        </>
+    );
+}
+
 const Nav = styled.div`
     position: fixed;
     width: 100vw;
@@ -68,53 +121,3 @@ const StLogin = styled.div`
         cursor: pointer;
     }
 `;
-
-export default function Navbar() {
-    const accessToken = localStorage.getItem("accessToken");
-    const navigate = useNavigate();
-    const onClickLogoutButton = () => {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("authorizationToken");
-        localStorage.removeItem("foodName");
-        localStorage.removeItem("foodId");
-        localStorage.removeItem("username");
-        localStorage.removeItem("imageUrl");
-        navigate("/");
-    };
-    return (
-        <>
-            <Nav>
-                <Link to="/">
-                    <img
-                        src={logo}
-                        alt="요기어때 로고"
-                    />
-                </Link>
-
-                {!accessToken ? (
-                    <StUnLogin>
-                        <button
-                            onClick={() => {
-                                navigate("/login");
-                            }}
-                        >
-                            LOG IN
-                        </button>
-                        <button
-                            onClick={() => {
-                                navigate("/signup");
-                            }}
-                        >
-                            SIGN UP
-                        </button>
-                    </StUnLogin>
-                ) : (
-                    <StLogin>
-                        <button onClick={onClickLogoutButton}>LOG OUT</button>
-                        <BsFillPersonFill className="human" />
-                    </StLogin>
-                )}
-            </Nav>
-        </>
-    );
-}
