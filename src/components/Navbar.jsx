@@ -25,7 +25,6 @@ export default function Navbar() {
                         alt="요기어때 로고"
                     />
                 </Link>
-
                 {!accessToken ? (
                     <StUnLogin>
                         <button

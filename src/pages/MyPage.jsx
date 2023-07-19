@@ -6,6 +6,7 @@ import api from "../axios/api";
 export default function MyPage() {
     const [image, setImage] = useState(ProfilePicture);
     const [file, setFile] = useState("");
+    const [data, setData] = useState("");
     const fileInput = useRef(null);
 
     const onChange = (e) => {
@@ -27,61 +28,77 @@ export default function MyPage() {
         reader.readAsDataURL(e.target.files[0]);
     };
 
-    // const getPage = async () => {
-    //     const response = await api.get(`/api/user/introduce`);
-    //     try {
-    //         console.log(response);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
+    const getMyPage = async () => {
+        try {
+            const response = await api.get(`/api/user/introduce`);
+            console.log("성공", response);
+        } catch (error) {
+            console.log("에러", error);
+        }
+    };
+    useEffect(() => {
+        getMyPage();
+    }, []);
 
     // useEffect(() => {
-    //     getPage();
+    //     const getMyPage = async () => {
+    //         try {
+    //             const response = await api.get(`/api/user/introduce`);
+    //             console.log("성공", response);
+    //         } catch (error) {
+    //             console.log("에러", error);
+    //         }
+    //     };
+    //     getMyPage();
     // }, []);
+
+    // 둘 다 엑세스 토큰이 없을 때(리프레시토큰 확인차) 무한 렌더링 일어납니다.
 
     return (
         <>
             <StBack>
                 <StContainer>
-                    <>
-                        <img
-                            src={image}
-                            onClick={() => {
-                                fileInput.current.click();
-                            }}
-                            alt="프로필 이미지"
-                        />
-                        <input
-                            type="file"
-                            style={{ display: "none" }}
-                            accept="image/jpg,impge/png,image/jpeg"
-                            name="profile_img"
-                            onChange={onChange}
-                            ref={fileInput}
-                        />
-                    </>
-                    <StData>
-                        <p>ID: </p>
-                        <p>Username:</p>
-                        <textarea
-                            placeholder="자기소개를 입력해주세요"
-                            className="introduction"
-                            name="memberDescription"
-                            style={{ resize: "none" }}
-                        />
-                    </StData>
+                    <StLikeTitle>회원정보</StLikeTitle>
+                    <StProfile>
+                        <>
+                            <img
+                                src={image}
+                                onClick={() => {
+                                    fileInput.current.click();
+                                }}
+                                alt="프로필 이미지"
+                            />
+                            <input
+                                type="file"
+                                style={{ display: "none" }}
+                                accept="image/jpg,impge/png,image/jpeg"
+                                name="profile_img"
+                                onChange={onChange}
+                                ref={fileInput}
+                            />
+                        </>
+                        <StData>
+                            <p>ID: </p>
+                            <p>Username:</p>
+                            <textarea
+                                placeholder="자기소개를 입력해주세요"
+                                className="introduction"
+                                name="memberDescription"
+                                style={{ resize: "none" }}
+                            />
+                        </StData>
+                    </StProfile>
                 </StContainer>
                 <StLikeContainer>
                     <StLikeTitle>관심 음식😋</StLikeTitle>
                     <StLikeWrapper>
-                    <section>
-                        <img
-                            src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Zm9vZHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
-                            alt="음식내역"
-                        />
-                        <p>음식 이름</p>
-                    </section>
+                        <section>
+                            <img
+                                src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Zm9vZHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
+                                alt="음식내역"
+                            />
+                            <p>음식 이름</p>
+                        </section>
                     </StLikeWrapper>
                 </StLikeContainer>
             </StBack>
@@ -91,7 +108,8 @@ export default function MyPage() {
 
 const StBack = styled.div`
     background-color: #f0ebe3;
-    height: 1200px;
+    height: 1000px;
+    padding: 30px;
 `;
 const StContainer = styled.div`
     width: 1000px;
@@ -101,14 +119,18 @@ const StContainer = styled.div`
     padding: 50px;
     border: 3px solid #41613c;
     border-radius: 20px;
-    display: flex;
-    flex-direction: row;
 
     img {
         width: 200px;
         height: 200px;
+        border-radius: 100%;
         margin: 20px;
     }
+`;
+
+const StProfile = styled.div`
+    display: flex;
+    flex-direction: row;
 `;
 
 const StData = styled.div`
@@ -138,18 +160,20 @@ const StLikeContainer = styled.div`
     flex-direction: column;
     overflow: hidden;
 `;
+
 const StLikeTitle = styled.h1`
     font-size: 25px;
     padding-bottom: 30px;
-`
+`;
+
 const StLikeWrapper = styled.div`
     gap: 20px;
     display: flex;
-    flex-wrap : wrap;
-    section{
+    flex-wrap: wrap;
+    section {
         width: 150px;
         text-align: center;
-        background-color:rgba(65, 97, 60, 0.2);
+        background-color: rgba(65, 97, 60, 0.2);
         border-radius: 10px;
         margin-bottom: 10px;
         padding: 25px 15px;
@@ -161,4 +185,4 @@ const StLikeWrapper = styled.div`
         margin-bottom: 20px;
         border: 2px solid white;
     }
-`
+`;

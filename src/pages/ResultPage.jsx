@@ -148,7 +148,7 @@ export default function ResultPage() {
 }
 
 const StContainer = styled.div`
-    width: 900px;
+    width: 100%;
     margin: auto;
     background-color: #e4dccf;
     padding: 50px;

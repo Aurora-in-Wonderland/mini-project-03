@@ -2,6 +2,7 @@ import axios from "axios";
 
 const instance = axios.create({
     baseURL: process.env.REACT_APP_SERVER_URL,
+    // baseURL: "http://1.244.223.183",
 });
 
 instance.interceptors.request.use(
@@ -9,7 +10,10 @@ instance.interceptors.request.use(
     function (config) {
         console.log("인터셉터 요청 성공!");
         const accessToken = localStorage.getItem("accessToken");
+        console.log(accessToken);
         accessToken && (config.headers.accesstoken = accessToken);
+        console.log(config.headers.Authorization);
+        console.log(config.headers);
         return config;
     },
 
@@ -24,9 +28,10 @@ instance.interceptors.response.use(
     // 응답을 내보내기 전 수행되는 함수
     function (response) {
         console.log("인터셉터 응답 받았습니다.");
-        response.headers.accesstoken && localStorage.setItem("accessToken", response.headers.accesstoken);
-        response.headers.authorization && localStorage.setItem("authorizationToken", response.headers.authorization);
-        response.data.username && localStorage.setItem("username", response.data.username);
+        console.log(response);
+        if (response.headers.accesstoken !== undefined) localStorage.setItem("accessToken", response.headers.accesstoken);
+        if (response.headers.authorization !== undefined) localStorage.setItem("authorizationToken", response.headers.authorization);
+        if (response.headers.username !== undefined) localStorage.setItem("username", response.headers.username);
         return response;
     },
 
@@ -39,13 +44,12 @@ instance.interceptors.response.use(
             localStorage.removeItem("authorizationToken");
             document.location.href = "/login";
         }
-
         const refreshToken = localStorage.getItem("authorizationToken");
         if (refreshToken !== null) {
             delete error.config.headers?.accesstoken;
-            const body = JSON.parse(error.config.data);
+            const body = error.config.data ? JSON.parse(error.config.data) : null;
             const headers = error.config.headers;
-            headers.authorization = refreshToken;
+            headers.Authorization = refreshToken;
             return (
                 refreshToken &&
                 instance[error.config.method](error.config.url, body, {
@@ -53,7 +57,7 @@ instance.interceptors.response.use(
                 })
             );
         } else {
-            alert("로그인 후 사용 가능합니다.")
+            alert("로그인 후 사용 가능합니다.");
             document.location.href = "/login";
         }
         console.log("End");
