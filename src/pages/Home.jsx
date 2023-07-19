@@ -64,7 +64,7 @@ export default Home;
 const StRankTitle = styled.h2`
     margin-top: 5vh;
     margin-bottom: 2vh;
-    font-size: 20px;
+    font-size: 30px;
     font-weight: 600;
     line-height: 30px;
     color: #114E60;
