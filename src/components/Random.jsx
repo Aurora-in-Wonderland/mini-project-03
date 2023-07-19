@@ -103,6 +103,7 @@ export default function Random({ status }) {
 
             navigate(`/food/${foodId}/comment`);
         } catch (error) {
+            alert("메뉴를 클릭해주세요.");
             console.error("에러:", error);
         }
     };

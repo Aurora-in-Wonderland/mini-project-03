@@ -59,6 +59,7 @@ export default function Comments({ setLike }) {
                 event.isModified = false;
             });
             setContents(data);
+            console.log(data);
             console.log("성공", data);
         } catch (error) {
             console.log("에러", error);

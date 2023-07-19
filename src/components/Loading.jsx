@@ -6,7 +6,7 @@ import styled from "styled-components";
 export const StBackground = styled.header`
     position: absolute;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     top: 0;
     left: 0;
     background: #ffffff;

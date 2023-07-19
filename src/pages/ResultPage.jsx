@@ -135,6 +135,7 @@ export default function ResultPage() {
 
         try {
             const response = await api.patch(`/api/food/${foodId}/choice`);
+
             console.log("성공:", response);
             localStorage.setItem("foodId", clickData.id);
             localStorage.setItem("foodName", clickData.name);
@@ -199,7 +200,11 @@ export default function ResultPage() {
                         <p>{isData && isData[3].name}</p>
                     </section>
                 </StSection>
-                <StButton onClick={onClickFinalMenu}>메뉴 선택하고 댓글쓰러 가기</StButton>
+                {!clickData ? (
+                    <StButton onClick={()=>alert("메뉴를 클릭해주세요.")}>메뉴 선택하고 댓글쓰러 가기</StButton>
+                ) : (
+                    <StButton onClick={onClickFinalMenu}>메뉴 선택하고 댓글쓰러 가기</StButton>
+                )}
             </StContainer>
         </>
     );
