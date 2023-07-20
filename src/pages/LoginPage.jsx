@@ -14,7 +14,6 @@ export default function LoginPage() {
 
     const handleLoginSubmit = async (event) => {
         event.preventDefault();
-        console.log(form);
 
         const idRegExp = /^[a-z0-9]{4,12}$/;
         const passwordRegExp = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z\d]{8,25}$/;

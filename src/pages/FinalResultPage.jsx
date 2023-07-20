@@ -23,7 +23,6 @@ export default function FinalResultPage() {
         }
     };
 
-    console.log(like);
 
     return (
         <div>

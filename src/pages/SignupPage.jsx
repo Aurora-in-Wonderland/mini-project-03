@@ -23,7 +23,6 @@ export default function SignupPage() {
 
     const handleSigninSubmit = async (event) => {
         event.preventDefault();
-        console.log(form);
         setForm({ username: "", address: "", password: "", confirm_password: "" });
         const idRegExp = /^[a-z0-9]{4,12}$/;
         const passwordRegExp = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z\d]{8,25}$/;
