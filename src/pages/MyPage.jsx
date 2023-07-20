@@ -1,22 +1,45 @@
 import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import ProfilePicture from "../image/ProfilePicture.png";
+import { useNavigate } from "react-router-dom";
+import imageCompression from 'browser-image-compression';
+import axios from "axios";
 import api from "../axios/api";
+import FormData from "form-data";
+
+// const api = axios.create({
+//     // baseURL: process.env.REACT_APP_SERVER_URL,
+//     baseURL: "http://1.244.223.183",
+// });
+
+const DEFAULT_PROFILE_IMAGE = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+
+
+const getImgUpload = async (image) => {
+    const resizingBlob = await imageCompression(image, { maxWidthOrHeight: 600 });
+    const resizingFile = new File([resizingBlob], image.name, { type: image.type });
+    return resizingFile;
+};
 
 export default function MyPage() {
     const [image, setImage] = useState(ProfilePicture);
+    const [upimageBoolean, setupimageBoolean] = useState(false);
     const [file, setFile] = useState("");
     const [isData, setIsData] = useState("");
     const [lists, setLists] = useState("");
+    const [TextField, setTextField] = useState("");
     const fileInput = useRef(null);
     const [wait, setWait] = useState(true);
+    const navigate = useNavigate();
 
     const onChange = (e) => {
         if (e.target.files[0]) {
             setFile(e.target.files[0]);
+            setupimageBoolean(true);
         } else {
             //업로드 취소할 시
-            setImage("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");
+            setImage(DEFAULT_PROFILE_IMAGE);
+            setupimageBoolean(false);
             return;
         }
 
@@ -30,47 +53,78 @@ export default function MyPage() {
         reader.readAsDataURL(e.target.files[0]);
     };
 
+    const SetMyPage = (response) => {
+        setIsData(response.data);
+        setTextField(response.data.introduce);
+        const List = [...response.data.myLike];
+        List.forEach((e) => {
+            e.onLoad = false;
+        });
+        response.data.profileImage === null ? setImage(DEFAULT_PROFILE_IMAGE) : setImage(response.data.profileImage);
+        setLists(List);
+        setWait(false);
+    };
+
     const getMyPage = async () => {
         try {
-            const response = await api.get(`/api/user/introduce`);
-            setIsData(response.data);
-            const List = [...response.data.myLike];
-            List.forEach((e) => {
-                e.onLoad = false;
-            });
-            setLists(List);
-            setWait(false);
+            const response = await api.get(`/api/account/introduce`);
+            SetMyPage(response);
             console.log("성공", response);
         } catch (error) {
-            console.log("에러", error);
+            try {
+                const refreshToken = localStorage.getItem("authorizationToken");
+                if (refreshToken === null) document.location.href = "/";
+                const headers = {
+                    Authorization: refreshToken,
+                };
+                const response = await api.get(`/api/account/introduce`, { headers: headers });
+                SetMyPage(response);
+            } catch (error) {
+                console.log(error);
+                if (error.response.data.refreshValidationError) {
+                    localStorage.removeItem("authorizationToken");
+                    document.location.href = "/login";
+                }
+            }
+        }
+    };
+    const setMyPage = async () => {
+        try {
+            let ImageUrl = null;
+            if (upimageBoolean) {
+                const resizeFile = getImgUpload(file);
+                const form = new FormData();
+                form.append("image", resizeFile);
+
+                const imageResponse = await axios.post("https://api.imgbb.com/1/upload", form, {
+                    params: {
+                        key: "66c373ad4a23ed26f9071e0e10803cfd",
+                    },
+                });
+
+                console.log(imageResponse.data.data.display_url);
+                ImageUrl = imageResponse.data.data.display_url;
+            }
+            const payload = {
+                introduce: TextField,
+                profileImage: ImageUrl,
+            };
+            const response = await api.patch(`/api/account/introduce`, payload);
+            console.log(response);
+            SetMyPage(response);
+        } catch (error) {
+            console.log(error);
         }
     };
 
-    const loadImage = (e, index) => {
-        if (!lists[index].onLoad) {
-            lists[index].onLoad = true;
-            const ch = [...lists];
-            setLists(ch);
-        }
+    const textFieldHandler = (event) => {
+        setTextField(event.target.value);
+        console.log(event.target.value);
     };
 
     useEffect(() => {
         getMyPage();
     }, []);
-
-    // useEffect(() => {
-    //     const getMyPage = async () => {
-    //         try {
-    //             const response = await api.get(`/api/user/introduce`);
-    //             console.log("성공", response);
-    //         } catch (error) {
-    //             console.log("에러", error);
-    //         }
-    //     };
-    //     getMyPage();
-    // }, []);
-
-    // 둘 다 엑세스 토큰이 없을 때(리프레시토큰 확인차) 무한 렌더링 일어납니다.
 
     if (wait) {
         return <div></div>;
@@ -100,7 +154,7 @@ export default function MyPage() {
                         </>
                         <StData>
                             <p>ID: {isData.username}</p>
-                            <p>Username:</p>
+                            <p>Username: {isData.address}</p>
                             {isData.introduce === null ? (
                                 <textarea
                                     placeholder="자기소개를 입력해주세요"
@@ -113,24 +167,30 @@ export default function MyPage() {
                                     placeholder="자기소개를 입력해주세요"
                                     className="introduction"
                                     name="memberDescription"
-                                    value={isData.introduce}
+                                    value={TextField}
+                                    onChange={textFieldHandler}
                                     style={{ resize: "none" }}
                                 />
                             )}
+                            <button onClick={setMyPage}>수정하기</button>
                         </StData>
                     </StProfile>
                 </StContainer>
                 <StLikeContainer>
                     <StLikeTitle>관심 음식😋</StLikeTitle>
                     <StLikeWrapper>
-                        {lists.map((item, index) =>
-                            item.onLoad ? (
-                                <section key={item.id}>
-                                    
-                                    <p>{item.name}</p>
-                                </section>
-                            ) : null
-                        )}
+                        {lists.map((item) => (
+                            <section
+                                key={item.id}
+                                // onClick={}
+                            >
+                                <img
+                                    src={item.imageUrl}
+                                    alt="추천 메뉴"
+                                />
+                                <p>{item.name}</p>
+                            </section>
+                        ))}
                     </StLikeWrapper>
                 </StLikeContainer>
             </StBack>
@@ -140,8 +200,10 @@ export default function MyPage() {
 
 const StBack = styled.div`
     background-color: #f0ebe3;
-    height: 1000px;
     padding: 30px;
+    @media (max-width: 768px) {
+        width: 100%;
+    }
 `;
 const StContainer = styled.div`
     width: 1000px;
@@ -157,6 +219,13 @@ const StContainer = styled.div`
         height: 200px;
         border-radius: 100%;
         margin: 20px;
+    }
+    @media (max-width: 768px) {
+        width: 100%;
+        padding: 0;
+        h1 {
+            font-size: 25px;
+        }
     }
 `;
 

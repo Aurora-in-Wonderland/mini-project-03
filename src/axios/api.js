@@ -42,6 +42,7 @@ instance.interceptors.response.use(
         error.response.data.accessValidationError && localStorage.removeItem("accessToken");
         if (error.response.data.refreshValidationError) {
             localStorage.removeItem("authorizationToken");
+            console.log("redirect");
             document.location.href = "/login";
         }
         const refreshToken = localStorage.getItem("authorizationToken");
@@ -50,18 +51,27 @@ instance.interceptors.response.use(
             const body = error.config.data ? JSON.parse(error.config.data) : null;
             const headers = error.config.headers;
             headers.Authorization = refreshToken;
-            return (
-                refreshToken &&
-                instance[error.config.method](error.config.url, body, {
-                    headers: headers,
-                })
-            );
+            if (error.config.method === "get") {
+                return (
+                    refreshToken &&
+                    instance[error.config.method](error.config.url, {
+                        headers: headers,
+                    })
+                );
+            } else {
+                return (
+                    refreshToken &&
+                    instance[error.config.method](error.config.url, body, {
+                        headers: headers,
+                    })
+                );
+            }
         } else {
-            alert("로그인 후 사용 가능합니다.");
-            document.location.href = "/login";
+            if (!error.config.url.includes("login")) {
+                alert("로그인 후 사용 가능합니다.");
+                document.location.href = "/login";
+            }
         }
-        console.log("End");
-
         return Promise.reject(error);
     }
 );

@@ -67,9 +67,11 @@ export default function ResultPage() {
     }
 
     const onClickFinalMenu = async (event) => {
-        const foodId = clickData.id;
         setLoading(true);
+        const foodId = clickData.id;
+// setTimeout(()=>{
 
+// })
         try {
             const response = await api.patch(`/api/food/${foodId}/choice`);
 
