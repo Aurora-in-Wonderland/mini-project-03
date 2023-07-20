@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-// import { BsFillTrashFill } from "react-icons/bs";
 import api from "../axios/api";
 import InputForm from "./InputForm";
 

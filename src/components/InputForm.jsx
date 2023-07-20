@@ -32,7 +32,6 @@ export default function InputForm({ contents, item, foodId, isMine, index, setCo
     };
 
     const ButtonHandler = async (event, index) => {
-        console.log(modified);
         if (!modified) {
             setModified(true);
         } else {
@@ -88,7 +87,6 @@ export default function InputForm({ contents, item, foodId, isMine, index, setCo
                         )}
                     </>
                 )
-                //(e) => textModifiedHandler(e, index, item.commentId)
             }
         </>
     );

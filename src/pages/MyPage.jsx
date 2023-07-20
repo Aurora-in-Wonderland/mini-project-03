@@ -7,11 +7,6 @@ import axios from "axios";
 import api from "../axios/api";
 import FormData from "form-data";
 
-// const api = axios.create({
-//     // baseURL: process.env.REACT_APP_SERVER_URL,
-//     baseURL: "http://1.244.223.183",
-// });
-
 const DEFAULT_PROFILE_IMAGE = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
 
 const getImgUpload = async (image) => {
@@ -102,7 +97,6 @@ export default function MyPage() {
                     },
                 });
 
-                console.log(imageResponse.data.data.display_url);
                 ImageUrl = imageResponse.data.data.display_url;
             }
             const payload = {
