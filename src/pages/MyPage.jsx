@@ -1,7 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import ProfilePicture from "../image/ProfilePicture.png";
+import { useNavigate } from "react-router-dom";
+// import axios from "axios";
 import api from "../axios/api";
+
+// const api = axios.create({
+//     // baseURL: process.env.REACT_APP_SERVER_URL,
+//     baseURL: "http://1.244.223.183",
+// });
 
 export default function MyPage() {
     const [image, setImage] = useState(ProfilePicture);
@@ -10,6 +17,7 @@ export default function MyPage() {
     const [lists, setLists] = useState("");
     const fileInput = useRef(null);
     const [wait, setWait] = useState(true);
+    const navigate = useNavigate();
 
     const onChange = (e) => {
         if (e.target.files[0]) {
@@ -30,19 +38,37 @@ export default function MyPage() {
         reader.readAsDataURL(e.target.files[0]);
     };
 
+    const SetMyPage = (response) => {
+        setIsData(response.data);
+        const List = [...response.data.myLike];
+        List.forEach((e) => {
+            e.onLoad = false;
+        });
+        setLists(List);
+        setWait(false);
+    };
+
     const getMyPage = async () => {
         try {
-            const response = await api.get(`/api/user/introduce`);
-            setIsData(response.data);
-            const List = [...response.data.myLike];
-            List.forEach((e) => {
-                e.onLoad = false;
-            });
-            setLists(List);
-            setWait(false);
+            const response = await api.get(`/api/account/introduce`);
+            SetMyPage(response);
             console.log("성공", response);
         } catch (error) {
-            console.log("에러", error);
+            try {
+                const refreshToken = localStorage.getItem("authorizationToken");
+                if (refreshToken === null) document.location.href = "/";
+                const headers = {
+                    Authorization: refreshToken,
+                };
+                const response = await api.get(`/api/account/introduce`, { headers: headers });
+                SetMyPage(response);
+            } catch (error) {
+                console.log(error);
+                if (error.response.data.refreshValidationError) {
+                    localStorage.removeItem("authorizationToken");
+                    document.location.href = "/login";
+                }
+            }
         }
     };
 
@@ -57,20 +83,6 @@ export default function MyPage() {
     useEffect(() => {
         getMyPage();
     }, []);
-
-    // useEffect(() => {
-    //     const getMyPage = async () => {
-    //         try {
-    //             const response = await api.get(`/api/user/introduce`);
-    //             console.log("성공", response);
-    //         } catch (error) {
-    //             console.log("에러", error);
-    //         }
-    //     };
-    //     getMyPage();
-    // }, []);
-
-    // 둘 다 엑세스 토큰이 없을 때(리프레시토큰 확인차) 무한 렌더링 일어납니다.
 
     if (wait) {
         return <div></div>;
@@ -100,7 +112,7 @@ export default function MyPage() {
                         </>
                         <StData>
                             <p>ID: {isData.username}</p>
-                            <p>Username:</p>
+                            <p>Username: {isData.address}</p>
                             {isData.introduce === null ? (
                                 <textarea
                                     placeholder="자기소개를 입력해주세요"
@@ -126,7 +138,6 @@ export default function MyPage() {
                         {lists.map((item, index) =>
                             item.onLoad ? (
                                 <section key={item.id}>
-                                    
                                     <p>{item.name}</p>
                                 </section>
                             ) : null
