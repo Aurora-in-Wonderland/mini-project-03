@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import ProfilePicture from "../image/ProfilePicture.png";
-import { useNavigate } from "react-router-dom";
-import imageCompression from 'browser-image-compression';
+import { useNavigate, Link } from "react-router-dom";
+import imageCompression from "browser-image-compression";
 import axios from "axios";
 import api from "../axios/api";
 import FormData from "form-data";
@@ -13,7 +13,6 @@ import FormData from "form-data";
 // });
 
 const DEFAULT_PROFILE_IMAGE = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
-
 
 const getImgUpload = async (image) => {
     const resizingBlob = await imageCompression(image, { maxWidthOrHeight: 600 });
@@ -88,6 +87,7 @@ export default function MyPage() {
             }
         }
     };
+
     const setMyPage = async () => {
         try {
             let ImageUrl = null;
@@ -172,26 +172,35 @@ export default function MyPage() {
                                     style={{ resize: "none" }}
                                 />
                             )}
-                            <button onClick={setMyPage}>수정하기</button>
+                            <div>
+                                <button onClick={setMyPage}>수정하기</button>
+                            </div>
                         </StData>
                     </StProfile>
                 </StContainer>
                 <StLikeContainer>
                     <StLikeTitle>관심 음식😋</StLikeTitle>
-                    <StLikeWrapper>
-                        {lists.map((item) => (
-                            <section
-                                key={item.id}
-                                // onClick={}
-                            >
-                                <img
-                                    src={item.imageUrl}
-                                    alt="추천 메뉴"
-                                />
-                                <p>{item.name}</p>
-                            </section>
-                        ))}
-                    </StLikeWrapper>
+                    <div>
+                        <StLikeWrapper>
+                            {lists.map((item) => (
+                                <section
+                                    key={item.id}
+                                    onClick={() => {
+                                        localStorage.setItem("foodId", item.id);
+                                        localStorage.setItem("foodName", item.name);
+                                        localStorage.setItem("imageUrl", item.imageUrl);
+                                        navigate(`/food/${item.id}/comment`);
+                                    }}
+                                >
+                                    <img
+                                        src={item.imageUrl}
+                                        alt="추천 메뉴"
+                                    />
+                                    <p>{item.name}</p>
+                                </section>
+                            ))}
+                        </StLikeWrapper>
+                    </div>
                 </StLikeContainer>
             </StBack>
         </>
@@ -199,14 +208,16 @@ export default function MyPage() {
 }
 
 const StBack = styled.div`
+    width: 100%;
     background-color: #f0ebe3;
     padding: 30px;
     @media (max-width: 768px) {
         width: 100%;
+        padding: 0;
     }
 `;
 const StContainer = styled.div`
-    width: 1000px;
+    width: 70%;
     margin: auto;
     margin-top: 7%;
     margin-bottom: 7%;
@@ -221,17 +232,41 @@ const StContainer = styled.div`
         margin: 20px;
     }
     @media (max-width: 768px) {
-        width: 100%;
-        padding: 0;
-        h1 {
-            font-size: 25px;
-        }
+        width: 60%;
     }
 `;
 
 const StProfile = styled.div`
     display: flex;
     flex-direction: row;
+
+    button {
+        width: 100px;
+        height: 50px;
+        color: #fff;
+        background-color: #41613c;
+        font-size: 15px;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        margin-left: 70%;
+        cursor: pointer;
+        &:hover {
+            color: #fff;
+            background-color: #374a34;
+        }
+    }
+    @media (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        button {
+            width: 10rem;
+            margin: 10% 25%;
+        }
+    }
 `;
 
 const StData = styled.div`
@@ -243,13 +278,19 @@ const StData = styled.div`
     }
     textarea {
         margin: 10px 40px;
-        width: 400px;
-        height: 100px;
+        width: 24rem;
+        height: 40%;
+    }
+
+    @media (max-width: 768px) {
+        textarea {
+            width: 60vw;
+        }
     }
 `;
 
 const StLikeContainer = styled.div`
-    width: 1000px;
+    width: 70%;
     max-height: 490px;
     margin: auto;
     margin-top: 7%;
@@ -260,11 +301,22 @@ const StLikeContainer = styled.div`
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    @media (max-width: 768px) {
+        width: 60%;
+
+        div {
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+    }
 `;
 
 const StLikeTitle = styled.h1`
     font-size: 25px;
     padding-bottom: 30px;
+    @media (max-width: 768px) {
+        text-align: center;
+    }
 `;
 
 const StLikeWrapper = styled.div`
@@ -285,5 +337,11 @@ const StLikeWrapper = styled.div`
         border-radius: 100%;
         margin-bottom: 20px;
         border: 2px solid white;
+    }
+
+    @media (max-width: 768px) {
+        section {
+            width: 100%;
+        }
     }
 `;
