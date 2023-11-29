@@ -1,70 +1,51 @@
-# Getting Started with Create React App
+# 요기어때
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+음식 추천 사이트, 랜덤으로 음식을 추천 할 뿐만 아니라 문답을 통해 사용자 맞춤 메뉴를 추천해줍니다.
 
-## Available Scripts
+## About Service
 
-In the project directory, you can run:
+<img width="1440" alt="mainpage" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbDKzsk%2FbtsA9PokqEJ%2Fz1iQjlczuZUBCMeJvvmoUK%2Fimg.png">
 
-### `yarn start`
+<br>오늘 뭐 먹지?
+<br>오늘은 어떤 음식을 먹으면 좋으면 좋을지 누가 좀 알려줘으면 하는 누구나 이용 가능한 사이트입니다.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 🎯 Target
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+-   점심 메뉴를 추천 받고 싶은 직장인, 학생
+-   랜덤으로 메뉴를 추천 받고 싶은 누구나
+-   메뉴를 추천 받고 싶지만 맞춤 메뉴를 추천 받고 싶은 답정너!
 
-### `yarn test`
+<br>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 💻 Service
 
-### `yarn build`
+    개발 기간 2023.07.14 - 2023.07.20 (1주일)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<br>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 🔍 화면 미리보기
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+|                                                                                                    메인페이지                                                                                                     |                                                        회원가입 및 로그인                                                        |                                                         마이페이지 수정                                                         |
+| :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------: |
+| <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbDKzsk%2FbtsA9PokqEJ%2Fz1iQjlczuZUBCMeJvvmoUK%2Fimg.png" alt="mainpage"  width="320" height="180"> | <img src="https://blog.kakaocdn.net/dn/cfp2Qw/btsA4RHMreM/JnAroNCEbBEzKq1oNyMcKk/img.gif" alt="signup" width="320" height="180"> | <img src="https://blog.kakaocdn.net/dn/phWjf/btsA7PbysGK/JaCGQNJGWbFAu1QTLCyLvK/img.gif" alt="mypage" width="320" height="180"> |
 
-### `yarn eject`
+|                                                           랜덤메뉴 선택                                                            |                                                           맞춤메뉴 질문                                                            |                                                             댓글 공유                                                             |
+| :--------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------: |
+| <img src="https://blog.kakaocdn.net/dn/b0PJdB/btsA6RAFZDD/B2qd4RREyTZZtbKpRkLOw0/img.gif" alt="random"  width="320" height="180" > | <img src="https://blog.kakaocdn.net/dn/21vit/btsA7S69hIL/i4Q2Rv15XNk2HcGy5myIxk/img.gif" alt="questions" width="320" height="180"> | <img src="https://blog.kakaocdn.net/dn/AyTPJ/btsA7ZdSKFd/8KBh2TJyBQKohdHXzzxXm0/img.gif" alt="comments" width="320" height="180"> |
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 🏆 Team Members
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Frontend
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+|                                     김은비                                      |                                     송미숙                                      |
+| :-----------------------------------------------------------------------------: | :-----------------------------------------------------------------------------: |
+| <img src ="https://avatars.githubusercontent.com/u/99107568?v=4" width="100" /> | <img src ="https://avatars.githubusercontent.com/u/63112170?v=4" width="100" /> |
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+#### Backend
 
-## Learn More
+|                                     김준우                                      |                                      김나영                                      |
+| :-----------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
+| <img src ="https://avatars.githubusercontent.com/u/68607939?v=4" width="100" /> | <img src ="https://avatars.githubusercontent.com/u/132897437?v=4" width="100" /> |
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<br>
+<br>

@@ -65,21 +65,7 @@ export default function MyPage() {
             SetMyPage(response);
             console.log("성공", response);
         } catch (error) {
-            try {
-                const refreshToken = localStorage.getItem("authorizationToken");
-                if (refreshToken === null) document.location.href = "/";
-                const headers = {
-                    Authorization: refreshToken,
-                };
-                const response = await api.get(`/api/account/introduce`, { headers: headers });
-                SetMyPage(response);
-            } catch (error) {
-                console.log(error);
-                if (error.response.data.refreshValidationError) {
-                    localStorage.removeItem("authorizationToken");
-                    document.location.href = "/login";
-                }
-            }
+            console.log("실패", error);
         }
     };
 
