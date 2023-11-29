@@ -52,6 +52,10 @@ instance.interceptors.response.use(
             const headers = error.config.headers;
             headers.Authorization = refreshToken;
             if (error.config.method === "get") {
+                console.log("1111111");
+                console.log(11);
+                console.log(error.config.url);
+                console.log(headers);
                 return (
                     refreshToken &&
                     instance[error.config.method](error.config.url, {
